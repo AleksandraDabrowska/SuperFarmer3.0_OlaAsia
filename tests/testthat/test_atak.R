@@ -1,0 +1,35 @@
+test_that("Atak drapieznika przyjmuje dwie wartosci logiczne przyjmuje 4 wektory i zwraca wektor",{
+  stado <-c(1,1,1,1,1,0,0)
+  names(stado) <- c('krolik','owca','swinia','krowa','kon','maly_pies','duzy_pies')
+  stado_max <- c(60,24,20,12,6,4,2)
+  names(stado_max) <- c('krolik','owca','swinia','krowa','kon','maly_pies','duzy_pies')
+  co_zostawia_lis <- c(0,24,20,12,6,4,2)
+  names(co_zostawia_lis) <- names(stado)
+  co_zostawia_wilk <- c(0,0,0,0,6,4,2)
+  names(co_zostawia_wilk) <- names(stado)
+
+  expect_error(.atak_drapieznika())
+  expect_error(.atak_drapieznika(TRUE))
+  expect_error(.atak_drapieznika(TRUE,FALSE))
+  expect_error(.atak_drapieznika(TRUE,FALSE,stado))
+  expect_is(.atak_drapieznika(TRUE,FALSE,stado,stado_max,co_zostawia_lis,co_zostawia_wilk),"numeric")
+  expect_named(.atak_drapieznika(TRUE,FALSE,stado,stado_max,co_zostawia_lis,co_zostawia_wilk),c('krolik', 'owca','swinia','krowa','kon','maly_pies','duzy_pies'))
+  expect_length(.atak_drapieznika(TRUE,FALSE,stado,stado_max,co_zostawia_lis,co_zostawia_wilk),7)
+})
+
+test_that("Atak drapieznika poprawnie reaguje",{
+  stado <-c(1,1,1,1,1,0,0)
+  names(stado) <- c('krolik','owca','swinia','krowa','kon','maly_pies','duzy_pies')
+  stado_max <- c(60,24,20,12,6,4,2)
+  names(stado_max) <- c('krolik','owca','swinia','krowa','kon','maly_pies','duzy_pies')
+  co_zostawia_lis <- c(0,24,20,12,6,4,2)
+  names(co_zostawia_lis) <- names(stado)
+  co_zostawia_wilk <- c(0,0,0,0,6,4,2)
+  names(co_zostawia_wilk) <- names(stado)
+  expect_equivalent(.atak_drapieznika(TRUE,FALSE,stado,stado_max,co_zostawia_lis,co_zostawia_wilk),c(0,1,1,1,1,0,0))
+  expect_equivalent(.atak_drapieznika(FALSE,TRUE,stado,stado_max,co_zostawia_lis,co_zostawia_wilk),c(0,0,0,0,1,0,0))
+  stado['maly_pies'] <- 1
+  stado['duzy_pies'] <- 1
+  expect_equivalent(.atak_drapieznika(TRUE,FALSE,stado,stado_max,co_zostawia_lis,co_zostawia_wilk),c(1,1,1,1,1,0,1))
+  expect_equivalent(.atak_drapieznika(FALSE,TRUE,stado,stado_max,co_zostawia_lis,co_zostawia_wilk),c(1,1,1,1,1,1,0))
+})

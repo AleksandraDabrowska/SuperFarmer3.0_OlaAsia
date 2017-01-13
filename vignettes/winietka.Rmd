@@ -1,0 +1,123 @@
+---
+title: "Pakiet SuperFarmer.SuperDziewczyn"
+author: "A. Dąbrowska, H. Kranas"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{'Uzywanie pakietu'}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## O pakiecie
+
+Pakiet `SuperFarmer.SuperDziewczyn` symuluje jednoosobową rozgrywkę w SuperFarmera. Pozwala na zbadanie statystyk związanych z ilością kroków wykonywanych w grze oraz wizualizację tychże. Zawiera także trzy przykładowe strategie gracza oraz umożliwia parametryzację rozgrywki (zmianę zasad gry).
+
+## Strategie
+
+Zawarte w pakiecie strategie opierają się na podstawowym wariancie gry (dane znajdujące się w pakiecie). Wszystkie bazują na założeniu że dążymy do zdobycia dwóch koni. Gdy cel zostanie osiągnięty wymieniamy konie na drobniejsze zwierzęta.
+
+####Parametry:
+
+* stado - nazwany wektor długości 7 opisujący stan stada gracza
+
+####Przykłady:  
+
+`nazwa_strategii(stado)`  
+
+### strategia_wymian_0_0_0_0
+
+W tej strategii wymieniamy wszystko jak nas stać, nie nakłądając ograniczeń na zostawianie sobie konkretnych zwierząt.
+
+### strategia_wymian_1_1_1_1
+
+W tej strategii wymieniamy przy nałożonych ograniczeniach na zostawianie sobie po jednym króliku, owcy, małym i dużym psie.
+
+### strategia_owce
+
+W tej strategii wymieniamy króliki, świnie i krowy kiedy to tylko możliwe na owce.
+
+## gra
+
+Funkcja symuluje jednoosobową rozgrywkę podaną strategią, zwracając liczbę wykonanych kroków (liczba rzutów kostką). Umożliwia parametryzację następujących argumentów: 
+
+####Parametry:
+
+* stado_max (maksymalne liczby zwierząt w stadzie głównym)
+
+* kostki (zwierzęta występujące na kostkach)
+
+* warunek_wygranej (warunek konieczny do wygrania gry)
+
+* co_zostawia_drapieżnik (liczby zwierząt pozostawiane po ataku drapieżnika)
+
+* wartość_w_królikach (wartości zwierząt w stadzie w królikach)
+
+####Przykłady:  
+
+`gra(nazwa_strategii)`
+
+`s_m <- c('krolik'=50,'owca'=20,'swinia'=20,'krowa'=10,'kon'=5,'maly_pies'=5,'duzy_pies'=3)`  
+`gra(nazwa_strategii, stado_max=s_m)`
+
+`zielona <- c('krolik','krolik','krolik','krolik','krolik','krolik','krolik','krolik','krolik','krolik','krolik','krolik')`  
+`gra(nazwa_strategii,kostka_zielona=zielona)`
+
+tak samo z kostką czerwoną.
+
+`w_w <- c('krolik'=1,'owca'=0,'swinia'=1,'krowa'=0,'kon'=0,'maly_pies'=0,'duzy_pies'=0)`  
+`gra(nazwa_strategii,warunek_wygranej = w_w)`
+
+`pozostawione <- c('krolik'=2,'owca'=2,'swinia'=0,'krowa'=0,'kon'=0,'maly_pies'=0,'duzy_pies'=0)`  
+`gra(nazwa_strategii,co_zostawia_lis = pozostawione)`
+
+tak samo z wilkiem.
+
+`kroliki <- c(1,2,3,4,5,6,7)`  
+`gra(nazwa_strategii,wartosc_w_krolikach = kroliki)`
+
+## badaj_gre
+
+Funkcja powtarza grę z podaną przez użytkownika strategią daną liczbę razy (domyślnie 100) i zwraca wektor zawierający długości poszczególnych gier. Może być parametryzowana w ten sam sposób co funkcja `gra`.
+
+####Parametry:
+
+* jak w funkcji gra
+
+* powtorzenia (liczba powtórzeń rozgrywek gry)
+
+####Przykłady:
+
+`badaj_gre(nazwa_strategii)`
+
+`badaj_gre(nazwa_strategii, powtorzenia=666)`
+
+oraz ze wszelkimi parametrami jw. w grze.
+
+## statystyki_gry
+
+Funkcja ta oblicza podstawowe statystyki (minimum, maximum, kwantyle, medianę i średnią) dla wektora wyników gier.
+
+####Parametry:
+
+* wektor wyników z funkcji badaj_gre
+
+####Przykłady:
+
+`statystyki_gry(badaj_gre(nazwa_strategii))`
+
+## wizualizacje_gry
+
+Funkcja ta rysuje wykresy (histogram, boxplot, skrzypcowy lub boxplot+skrzypcowy) dla wektora wyników gier.
+
+####Parametry:
+
+* wektor wyników z funkcji badaj_gre
+
+* typy wykresóW
+
+####Przykłady:
+
+`wizualizacja_gry(badaj_gre(nazwa_strategii),typ_wykresu1 = 'histogram')`
+
+`wizualizacja_gry(badaj_gre(nazwa_strategii),typ_wykresu1 = 'skrzypce', typ_wykresu2 = 'boxplot')`

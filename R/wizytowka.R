@@ -25,6 +25,7 @@
 #'
 #'@importFrom grid textGrob
 #'@importFrom grid gpar
+#'@importFrom grid unit 
 #'
 #'@importFrom gridExtra grid.arrange
 #'@importFrom gridExtra tableGrob
@@ -36,6 +37,7 @@
 #'
 #'@importFrom grDevices dev.off
 #'@importFrom grDevices pdf
+#'
 #'
 #'
 #'@examples

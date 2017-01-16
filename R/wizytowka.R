@@ -1,16 +1,52 @@
-#'Wizytowka do strategii owce
+#'Wizytowka do strategii z Pakietu SuperFarmer.SuperDziewczyn
+#'
+#'Funkcja wizytowka generuje wizytowke w formacie pdf opisujaca wybrana strategie.
+#'
+#'@param strategia wybrana strategia
+#'
+#'@importFrom ggplot2 ggplot
+#'@importFrom ggplot2 aes
+#'@importFrom ggplot2 geom_point
+#'@importFrom ggplot2 geom_density
+#'@importFrom ggplot2 geom_vline
+#'@importFrom ggplot2 ggtitle
+#'@importFrom ggplot2 scale_color_manual
+#'@importFrom ggplot2 scale_fill_manual
+#'@importFrom ggplot2 xlab
+#'@importFrom ggplot2 ylab
+#'@importFrom ggplot2 ggsave
+#'@importFrom ggplot2 ylim
+#'@importFrom ggplot2 theme
+#'@importFrom ggplot2 element_rect
+#'@importFrom ggplot2 labs
+#'
+#'@importFrom plyr ddply
+#'@importFrom plyr summarise
+#'
+#'@importFrom grid textGrob
+#'@importFrom grid gpar
+#'
+#'@importFrom gridExtra grid.arrange
+#'@importFrom gridExtra tableGrob
+#'
+#'@importFrom stats sd
+#'@importFrom stats median
+#'@importFrom optimbase transpose
+#'
+#'@importFrom grDevices dev.off
+#'@importFrom grDevices pdf
 #'
 #'
-#'
-#'
-#'
-#'
+#'@examples
+#'\dontrun{
+#'wizytowka_strategia_owce <- wizytowka(SuperFarmer.SuperDziewczyn::strategia_owce)
+#'}
+#'@export
 
 
 wizytowka <- function(strategia){
-  #dane do wizytówki
-  library(plyr)
-  library(ggplot2)
+  #dane do wizytowki
+
   przebieg_gry <- SuperFarmer.SuperDziewczyn::gra(strategia)
   macierz_przebiegu_gry <- przebieg_gry[[1]]
   
@@ -44,20 +80,30 @@ wizytowka <- function(strategia){
   przebieg <- rbind(przebieg_100_gier_superdziewczyn,przebieg_100_gier_moc)
   przebieg <- rbind(przebieg,przebieg_100_gier_da)
   
-  srednia <-plyr::ddply(przebieg, "Strategia", summarise, grp.mean=mean(Liczba_ruchow))
+  srednia <-ddply(przebieg, "Strategia", summarise, grp.mean=mean(przebieg$Liczba_ruchow))
   
-  mediana <- plyr::ddply(przebieg,"Strategia",summarise,grp.median=median(Liczba_ruchow))
+  mediana <- ddply(przebieg,"Strategia",summarise,grp.median=median(przebieg$Liczba_ruchow))
   #wykres gestosci dla najlepszej strategii z pakietu moc, najgorszej z da i naszej - owce
-  #narazie nazwa pakiet ale powinnnismy to opisac od strategii, ale jeszcze nie wiem jak
-  wykres_gestosc <- ggplot2::ggplot(przebieg, aes(Liczba_ruchow,..count..,colour=Strategia,fill=Strategia))+
+  
+  wykres_gestosc <- ggplot(przebieg, aes(przebieg$Liczba_ruchow,colour=przebieg$Strategia,fill=przebieg$Strategia))+
     geom_density(position="stack")+
     scale_color_manual(values=c("#2166ac","#1b7837","#762a83"))+
     scale_fill_manual(values=c("#d1e5f0","#d9f0d3","#e7d4e8"))+
-    geom_vline(data=srednia, aes(xintercept=grp.mean, color=Strategia),linetype="dashed")+
-    geom_vline(data=mediana, aes(xintercept=grp.median, color=Strategia))+
+    geom_vline(data=srednia, aes(xintercept=srednia$grp.mean, color=srednia$Strategia),linetype="dashed")+
+    geom_vline(data=mediana, aes(xintercept=mediana$grp.median, color=mediana$Strategia))+
     ylab("Liczba gier")+
-    xlab("Liczba ruchów")+
-    ggtitle(paste0("Porownanie gestosci dla strategii ",deparse(substitute(strategia)),",\nSuperFarmerMoc::strategia_postMDiPR i SuperFarmerDA::strategia_DKA"))
+    xlab("Liczba ruchow")+
+    ggtitle(paste0("Porownanie gestosci dla strategii ",deparse(substitute(strategia)),",\nSuperFarmerMoc::strategia_postMDiPR i SuperFarmerDA::strategia_DKA"))+
+    theme(panel.background = element_rect(fill="white"),
+          axis.text.x = element_text(size=20),
+          axis.text.y = element_text(size=20),
+          axis.title.x = element_text(size=20),
+          axis.title.y = element_text(size=20),
+          title = element_text(size=25),
+          legend.title = element_text(size=25),
+          legend.text = element_text(size=20))+
+    labs(fill="Strategia\n",color="Strategia\n")
+  
   
   
   #wykres zwierzatka
@@ -74,11 +120,20 @@ wizytowka <- function(strategia){
   
   #teraz wykres pokazujacy rozlozenie zwierzatek w stadzie dla kazdej kolejki
   
-  owce_i_kroliki <- ggplot(zwierzatka,aes(Numer_kolejki,liczba,col=zwierze,shape=zwierze))+
+  owce_i_kroliki <- ggplot(zwierzatka,aes(zwierzatka$Numer_kolejki,zwierzatka$liczba,col=zwierzatka$zwierze,shape=zwierzatka$zwierze))+
     geom_point(size=3)+
     ylab("Liczba zwierzatek")+
     xlab("Numer kolejki")+
-    ggtitle("Liczba królików i owiec w pojedynczej grze")
+    ggtitle("Liczba krolikow i owiec w pojedynczej grze")+
+    theme(panel.background = element_rect(fill="white"),
+          axis.text.x = element_text(size=20),
+          axis.text.y = element_text(size=20),
+          axis.title.x = element_text(size=20),
+          axis.title.y = element_text(size=20),
+          title = element_text(size=30),
+          legend.text = element_text(size=20),
+          legend.title = element_text(size=25))+
+    labs(color="Zwierze\n",shape="Zwierze\n")
     
     
   #wykres konie, krowy swinki
@@ -98,20 +153,29 @@ wizytowka <- function(strategia){
   zwierzatka_duze <- rbind(swinki,krowy)
   zwierzatka_duze <- rbind(zwierzatka_duze,konie)
 
-  swinki_krowy_koniki <- ggplot(zwierzatka_duze,aes(Numer_kolejki,liczba,col=zwierze,shape=zwierze))+
+  swinki_krowy_koniki <- ggplot(zwierzatka_duze,aes(zwierzatka_duze$Numer_kolejki,zwierzatka_duze$liczba,col=zwierzatka_duze$zwierze,shape=zwierzatka_duze$zwierze))+
     geom_point(size=3)+
     ylab("Liczba zwierzatek")+
     xlab("Numer kolejki")+
-    ggtitle("Liczba swinek, krów i koników w pojedynczej grze")
+    ggtitle("Liczba swinek, krow i konikow w pojedynczej grze")+
+    theme(panel.background = element_rect(fill="white"),
+          axis.text.x = element_text(size=20),
+          axis.text.y = element_text(size=20),
+          axis.title.x = element_text(size=20),
+          axis.title.y = element_text(size=20),
+          title = element_text(size=30),
+          legend.text = element_text(size=20),
+          legend.title = element_text(size=25))+
+    labs(color="Zwierze\n",shape="Zwierze\n")
   
     
   
   #tytul
-  tytul <- grid::textGrob("Wizytówka strategii owce Aleksandra Dabrowska, Joanna Zbijewska")
+  tytul <- textGrob(paste0("Wizytowka ",deparse(substitute(strategia)),"\n  Aleksandra Dabrowska, Joanna Zbijewska"),gp=gpar(fontsize=35, col="black"))
   
   
   #to co chcemy dolozyc jako tekst
-  tekst <- grid::textGrob("Strategia owce czy cos")
+  tekst <- textGrob((paste0("\nPrzedstawiamy ",deparse(substitute(strategia))," z pakietu SuperFarmer.SuperDziewczyn.\n Porownalysmy ja ze strategia strategia_postMDiPR z pakietu SuperFarmerMoc, dajaca najlepsze wyniki \n oraz strategia strategia_DKA z pakietu SuperFarmerDA, ktora dawala najdluzsze czasy gry.\n Porownanie przedstawilysmy na wykresie gestosci,na ktorym dodatkowo zaznaczane sa srednia i mediana\n dla kazdej strategii, a takze w tabeli z podstawowymi statystykami. Jednoczesnie dla przedstawionej strategii \n przedstawiamy zmiany liczby niektorych zwierzat w stadzie podczas pojedynczej gry.")),gp=gpar(fontsize=22, col="black"))
   
   #statystyki na wczesniej przygotowanych danych
   
@@ -140,11 +204,12 @@ wizytowka <- function(strategia){
   statystyki <- rbind(statystyki,srednia_odcieta)
   statystyki <- rbind(statystyki,mediana_zwykla)
  
+  statystyki <- transpose(statystyki)
   statystyki <- as.data.frame(statystyki)
   
-  colnames(statystyki) <- c("superdziewczyn","moc","da")
+  rownames(statystyki) <- c(deparse(substitute(strategia)),"SuperFarmerMoc::strategia_postMDiPR","SuperFarmerDA::strategia_DKA")
   
-  statystyki <- gridExtra::tableGrob(statystyki)
+  statystyki <- tableGrob(statystyki)
   
   
   
@@ -161,10 +226,9 @@ wizytowka <- function(strategia){
   
   
   #oba <-gridExtra::grid.arrange(grobs=c(tytul,wykres_gestosc, tekst,statystyki,owce_i_kroliki,swinki_krowy_koniki),layout_matrix=layout) #na rownych skalach
+  pdf("filename.pdf", width = 29.7, height = 21) # Open a new pdf file
+  grid.arrange(tytul,tekst,wykres_gestosc,statystyki,owce_i_kroliki,swinki_krowy_koniki,nrow=3,ncol=2,widths=c(14.8,14.8),heights=c(5, 8, 8))
+  dev.off()
   
-  dd <- gridExtra::grid.arrange(tytul,tekst,wykres_gestosc,statystyki,owce_i_kroliki,swinki_krowy_koniki,nrow=3,ncol=2,widths=c(1.2,1.2),heights=c(1, 3, 3))
-  
-  
-  ggplot2::ggsave("strategia_owce.pdf",dd)
   
 }

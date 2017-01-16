@@ -2,11 +2,19 @@
 % Please edit documentation in R/wizytowka.R
 \name{wizytowka}
 \alias{wizytowka}
-\title{Wizytowka do strategii owce}
+\title{Wizytowka do strategii z Pakietu SuperFarmer.SuperDziewczyn}
 \usage{
 wizytowka(strategia)
 }
+\arguments{
+\item{strategia}{wybrana strategia}
+}
 \description{
-Wizytowka do strategii owce
+Funkcja wizytowka generuje wizytowke w formacie pdf opisujaca wybrana strategie.
+}
+\examples{
+\dontrun{
+wizytowka_strategia_owce <- wizytowka(SuperFarmer.SuperDziewczyn::strategia_owce)
+}
 }
 

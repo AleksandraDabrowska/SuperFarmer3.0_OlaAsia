@@ -54,9 +54,9 @@ wizytowka <- function(strategia){
   macierz_przebiegu_gry <- przebieg_gry[[1]]
   
   
-  przebieg_100_gier_superdziewczyn <- SuperFarmer.SuperDziewczyn::badaj_gre(strategia,powtorzenia = 100)
+  przebieg_100_gier_superdziewczyn <- SuperFarmer.SuperDziewczyn::badaj_gre(SuperFarmer.SuperDziewczyn::strategia_owce,powtorzenia = 100)
   przebieg_100_gier_moc <- SuperFarmerMoc::badaj_gre(SuperFarmerMoc::strategia_postMDiPR,liczba_prob=100)
-  przebieg_100_gier_da <- SuperFarmer.SuperDziewczyn::badaj_gre(SuperFarmerDA::strategia_DKA,powtorzenia=100)
+  przebieg_100_gier_rcnk <- SuperFarmer.SuperDziewczyn::badaj_gre(SuperFarmerRCNK::strategia_anty_yolo,powtorzenia=100)
   
   #jako ramki danych
   macierz_przebiegu_gry<-cbind(macierz_przebiegu_gry,c(1:przebieg_gry[[2]]))
@@ -64,29 +64,29 @@ wizytowka <- function(strategia){
   przebieg_gry <- as.data.frame(macierz_przebiegu_gry)
   przebieg_100_gier_superdziewczyn <- as.data.frame(przebieg_100_gier_superdziewczyn)
   przebieg_100_gier_moc <- as.data.frame(przebieg_100_gier_moc)
-  przebieg_100_gier_da <- as.data.frame(przebieg_100_gier_da)
+  przebieg_100_gier_rcnk <- as.data.frame(przebieg_100_gier_rcnk)
   
   colnames(przebieg_100_gier_superdziewczyn) <- "Liczba_ruchow"
   colnames(przebieg_100_gier_moc) <- "Liczba_ruchow"
-  colnames(przebieg_100_gier_da) <- "Liczba_ruchow"
+  colnames(przebieg_100_gier_rcnk) <- "Liczba_ruchow"
   
   przebieg_100_gier_superdziewczyn <-cbind(przebieg_100_gier_superdziewczyn, sample(deparse(substitute(strategia)),100, replace=TRUE))
   
   przebieg_100_gier_moc <-cbind(przebieg_100_gier_moc, sample("SuperFarmerMoc::strategia_postMDiPR",100, replace=TRUE))
   
-  przebieg_100_gier_da <-cbind(przebieg_100_gier_da, sample("SuperFarmerDA::strategia_DKA",100, replace=TRUE))
+  przebieg_100_gier_rcnk <-cbind(przebieg_100_gier_rcnk, sample("SuperFarmerRCNK::strategia_anty_yolo",100, replace=TRUE))
   
   colnames(przebieg_100_gier_superdziewczyn)[2] <- "Strategia"
   colnames(przebieg_100_gier_moc)[2] <- "Strategia"
-  colnames(przebieg_100_gier_da)[2] <- "Strategia"
+  colnames(przebieg_100_gier_rcnk)[2] <- "Strategia"
   
   przebieg <- rbind(przebieg_100_gier_superdziewczyn,przebieg_100_gier_moc)
-  przebieg <- rbind(przebieg,przebieg_100_gier_da)
+  przebieg <- rbind(przebieg,przebieg_100_gier_rcnk)
   
   srednia <-ddply(przebieg, "Strategia", summarise, grp.mean=mean(przebieg$Liczba_ruchow))
   
   mediana <- ddply(przebieg,"Strategia",summarise,grp.median=median(przebieg$Liczba_ruchow))
-  #wykres gestosci dla najlepszej strategii z pakietu moc, najgorszej z da i naszej - owce
+  #wykres gestosci dla najlepszej strategii z pakietu moc, najgorszej z rcnk i naszej - owce
   
   wykres_gestosc <- ggplot(przebieg, aes(przebieg$Liczba_ruchow,colour=przebieg$Strategia,fill=przebieg$Strategia))+
     geom_density(position="stack")+
@@ -96,7 +96,7 @@ wizytowka <- function(strategia){
     geom_vline(data=mediana, aes(xintercept=mediana$grp.median, color=mediana$Strategia))+
     ylab("Liczba gier")+
     xlab("Liczba ruchow")+
-    ggtitle(paste0("Porownanie gestosci dla strategii ",deparse(substitute(strategia)),",\nSuperFarmerMoc::strategia_postMDiPR i SuperFarmerDA::strategia_DKA"))+
+    ggtitle(paste0("Porownanie gestosci dla strategii ",deparse(substitute(strategia)),",\nSuperFarmerMoc::strategia_postMDiPR i SuperFarmerRCNK::strategia_anty_yolo"))+
     theme(panel.background = element_rect(fill="white"),
           axis.text.x = element_text(size=20),
           axis.text.y = element_text(size=20),
@@ -178,25 +178,25 @@ wizytowka <- function(strategia){
   
   
   #to co chcemy dolozyc jako tekst
-  tekst <- textGrob((paste0("\nPrzedstawiamy ",deparse(substitute(strategia))," z pakietu SuperFarmer.SuperDziewczyn.\n Porownalysmy ja ze strategia strategia_postMDiPR z pakietu SuperFarmerMoc, dajaca najlepsze wyniki \n oraz strategia strategia_DKA z pakietu SuperFarmerDA, ktora dawala najdluzsze czasy gry.\n Porownanie przedstawilysmy na wykresie gestosci,na ktorym dodatkowo zaznaczane sa srednia i mediana\n dla kazdej strategii, a takze w tabeli z podstawowymi statystykami. Jednoczesnie dla przedstawionej strategii \n przedstawiamy zmiany liczby niektorych zwierzat w stadzie podczas pojedynczej gry.")),gp=gpar(fontsize=22, col="black"))
+  tekst <- textGrob((paste0("\nPrzedstawiamy ",deparse(substitute(strategia))," z pakietu SuperFarmer.SuperDziewczyn.\n Porownalysmy ja ze strategia strategia_postMDiPR z pakietu SuperFarmerMoc, dajaca najlepsze wyniki \n oraz strategia strategia_anty_yolo z pakietu SuperFarmerRCNK, ktora dawala najdluzsze czasy gry.\n Porownanie przedstawilysmy na wykresie gestosci,na ktorym dodatkowo zaznaczane sa srednia i mediana\n dla kazdej strategii, a takze w tabeli z podstawowymi statystykami. Jednoczesnie dla przedstawionej strategii \n przedstawiamy zmiany liczby niektorych zwierzat w stadzie podczas pojedynczej gry.")),gp=gpar(fontsize=22, col="black"))
   
   #statystyki na wczesniej przygotowanych danych
   
-  minimum <- c(min(przebieg_100_gier_superdziewczyn$Liczba_ruchow),min(przebieg_100_gier_moc$Liczba_ruchow),min(przebieg_100_gier_da$Liczba_ruchow))
+  minimum <- c(min(przebieg_100_gier_superdziewczyn$Liczba_ruchow),min(przebieg_100_gier_moc$Liczba_ruchow),min(przebieg_100_gier_rcnk$Liczba_ruchow))
   
-  maksimum <- c(max(przebieg_100_gier_superdziewczyn$Liczba_ruchow),max(przebieg_100_gier_moc$Liczba_ruchow),max(przebieg_100_gier_da$Liczba_ruchow))
+  maksimum <- c(max(przebieg_100_gier_superdziewczyn$Liczba_ruchow),max(przebieg_100_gier_moc$Liczba_ruchow),max(przebieg_100_gier_rcnk$Liczba_ruchow))
   
-  odchylenie <- c(sd(przebieg_100_gier_superdziewczyn$Liczba_ruchow),sd(przebieg_100_gier_moc$Liczba_ruchow),sd(przebieg_100_gier_da$Liczba_ruchow))
+  odchylenie <- c(sd(przebieg_100_gier_superdziewczyn$Liczba_ruchow),sd(przebieg_100_gier_moc$Liczba_ruchow),sd(przebieg_100_gier_rcnk$Liczba_ruchow))
   odchylenie <- round(odchylenie, digits = 2)
   
-  srednia_zwykla <- c(mean(przebieg_100_gier_superdziewczyn$Liczba_ruchow),mean(przebieg_100_gier_moc$Liczba_ruchow),mean(przebieg_100_gier_da$Liczba_ruchow))
+  srednia_zwykla <- c(mean(przebieg_100_gier_superdziewczyn$Liczba_ruchow),mean(przebieg_100_gier_moc$Liczba_ruchow),mean(przebieg_100_gier_rcnk$Liczba_ruchow))
   
-  srednia_odcieta <- c(mean(przebieg_100_gier_superdziewczyn$Liczba_ruchow,trim=0.2),mean(przebieg_100_gier_moc$Liczba_ruchow,trim=0.2),mean(przebieg_100_gier_da$Liczba_ruchow,trim=0.2))
+  srednia_odcieta <- c(mean(przebieg_100_gier_superdziewczyn$Liczba_ruchow,trim=0.2),mean(przebieg_100_gier_moc$Liczba_ruchow,trim=0.2),mean(przebieg_100_gier_rcnk$Liczba_ruchow,trim=0.2))
   
   srednia_odcieta <- round(srednia_odcieta, digits = 2)
   
   
-  mediana_zwykla <- c(median(przebieg_100_gier_superdziewczyn$Liczba_ruchow),median(przebieg_100_gier_moc$Liczba_ruchow),median(przebieg_100_gier_da$Liczba_ruchow))
+  mediana_zwykla <- c(median(przebieg_100_gier_superdziewczyn$Liczba_ruchow),median(przebieg_100_gier_moc$Liczba_ruchow),median(przebieg_100_gier_rcnk$Liczba_ruchow))
   
   rozrzut <- maksimum-minimum
   
@@ -210,7 +210,7 @@ wizytowka <- function(strategia){
   
   statystyki <- as.data.frame(statystyki)
   
-  colnames(statystyki) <- c(deparse(substitute(strategia)),"SuperFarmerMoc::strategia_postMDiPR","SuperFarmerDA::strategia_DKA")
+  colnames(statystyki) <- c(deparse(substitute(strategia)),"SuperFarmerMoc::strategia_postMDiPR","SuperFarmerRCNK::strategia_anty_yolo")
   rownames(statystyki)<-c("minimum","maksimum","rozrzut","odchylenie\n standardowe","srednia","srednia odcieta","mediana")
 
   
@@ -241,7 +241,7 @@ wizytowka <- function(strategia){
   
   
   #oba <-gridExtra::grid.arrange(grobs=c(tytul,wykres_gestosc, tekst,statystyki,owce_i_kroliki,swinki_krowy_koniki),layout_matrix=layout) #na rownych skalach
-  pdf("filename.pdf", width = 29.7, height = 21) # Open a new pdf file
+  pdf("ola.pdf", width = 29.7, height = 21) # Open a new pdf file
   grid.arrange(tytul,tekst,wykres_gestosc,statystyki,owce_i_kroliki,swinki_krowy_koniki,nrow=3,ncol=2,widths=c(14.8,14.8),heights=c(5, 8, 8))
   dev.off()
   

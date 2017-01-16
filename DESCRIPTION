@@ -8,7 +8,7 @@ License: GPL
 Encoding: UTF-8
 LazyData: true
 Imports: dplyr, roxygen2,
-    ggplot2,gridExtra,plyr,grid,stats, SuperFarmerMoc,SuperFarmerDA,optimbase,grDevices
+    ggplot2,gridExtra,plyr,grid,stats, SuperFarmerMoc,SuperFarmerRCNK,optimbase,grDevices
 RoxygenNote: 5.0.1
 NeedsCompilation: no
 Packaged: 2016-11-19 20:57:19 UTC; O

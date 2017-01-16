@@ -28,6 +28,7 @@
 #'
 #'@importFrom gridExtra grid.arrange
 #'@importFrom gridExtra tableGrob
+#'@importFrom gridExtra ttheme_default
 #'
 #'@importFrom stats sd
 #'@importFrom stats median
@@ -204,12 +205,24 @@ wizytowka <- function(strategia){
   statystyki <- rbind(statystyki,srednia_odcieta)
   statystyki <- rbind(statystyki,mediana_zwykla)
  
-  statystyki <- transpose(statystyki)
+  
   statystyki <- as.data.frame(statystyki)
   
-  rownames(statystyki) <- c(deparse(substitute(strategia)),"SuperFarmerMoc::strategia_postMDiPR","SuperFarmerDA::strategia_DKA")
+  colnames(statystyki) <- c(deparse(substitute(strategia)),"SuperFarmerMoc::strategia_postMDiPR","SuperFarmerDA::strategia_DKA")
+  rownames(statystyki)<-c("minimum","maksimum","rozrzut","odchylenie\n standardowe","srednia","srednia odcieta","mediana")
+
   
-  statystyki <- tableGrob(statystyki)
+ 
+  
+  mytheme <- gridExtra::ttheme_default(
+    core = list(fg_params=list(cex = 2.0)),
+    colhead = list(fg_params=list(cex = 1.2)),
+    rowhead = list(fg_params=list(cex = 2.0)))
+  
+  statystyki <- tableGrob(statystyki, theme = mytheme)
+  statystyki$widths <- unit(rep(1/ncol(statystyki), ncol(statystyki)), "npc")
+  statystyki$heights <-unit(rep(1/nrow(statystyki), nrow(statystyki)), "npc")
+
   
   
   

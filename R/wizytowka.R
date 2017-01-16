@@ -218,12 +218,12 @@ wizytowka <- function(strategia){
   
   mytheme <- gridExtra::ttheme_default(
     core = list(fg_params=list(cex = 2.0),bg_params = list(fill = c("#d1e5f0","#d9f0d3","#e7d4e8"))),
-    colhead = list(fg_params=list(cex = 1.2)),
-    rowhead = list(fg_params=list(cex = 2.0)))
+    colhead = list(fg_params=list(cex = 2.0)),
+    rowhead = list(fg_params=list(cex = 1.2)))
   
   statystyki_tabela <- tableGrob(statystyki, theme = mytheme)
-  statystyki_tabela$widths <- unit(rep(1/ncol(statystyki), ncol(statystyki)), "npc")
-  statystyki_tabela$heights <-unit(rep(1/nrow(statystyki), nrow(statystyki)), "npc")
+  #statystyki_tabela$widths <- unit(rep(1/ncol(statystyki), ncol(statystyki)), "npc")
+  #statystyki_tabela$heights <-unit(rep(2/nrow(statystyki), nrow(statystyki)), "npc")
 
   
   #ustawienia na stronie 
@@ -235,9 +235,14 @@ wizytowka <- function(strategia){
                   c(5,5,5,5,6,6,6,6),
                   c(5,5,5,5,6,6,6,6))
   
+  lay <- rbind(c(1,2),
+               c(3,2),
+               c(3,2),
+               c(4,4),
+               c(5,6),
+               c(5,6))
   
-  
-  #oba <-gridExtra::grid.arrange(grobs=c(tytul,wykres_gestosc, tekst,statystyki,owce_i_kroliki,swinki_krowy_koniki),layout_matrix=layout) #na rownych skalach
+  #oba <-gridExtra::grid.arrange(grobs=c(tytul,wykres_gestosc, tekst,statystyki_tabela,owce_i_kroliki,swinki_krowy_koniki),layout_matrix=lay) #na rownych skalach
   pdf("asia.pdf", width = 29.7, height = 21) # Open a new pdf file
   grid.arrange(tytul,tekst,wykres_gestosc,statystyki_tabela,owce_i_kroliki,swinki_krowy_koniki,nrow=3,ncol=2,widths=c(14.8,14.8),heights=c(5, 8, 8))
   dev.off()

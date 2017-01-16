@@ -30,7 +30,8 @@ gra(strategia, stado_max = SuperFarmer.SuperDziewczyn::stado_max,
 \item{wartosc_w_krolikach}{wektor zawierajacy wartosci w krolikach poszczegolnych zwierzat}
 }
 \value{
-liczba oznaczajaca dlugosc trwania gry
+Lista dwuelementowa - 1. macierz zawierajaca liczbę zwierzat w stadzie po kazdym ruchu;
+2. liczbe kolejek, ktora trwala gra.
 }
 \description{
 Funkcja `gra()` symuluje pojedyncza rozgrywke w SuperFarmera zadana na poczatku strategia. Opcjonalnie mozna zmieniac parametry, np. zwierzeta na kostkach, warunek wygranej. Funkcja zwraca liczbe oznaczajaca dlugosc trwania tejze gry.

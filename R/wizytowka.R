@@ -50,7 +50,7 @@
 wizytowka <- function(strategia){
   #dane do wizytowki
 
-  przebieg_gry <- SuperFarmer.SuperDziewczyn::gra(strategia)
+  przebieg_gry <- SuperFarmer.SuperDziewczyn::gra(SuperFarmer.SuperDziewczyn::strategia_owce)
   macierz_przebiegu_gry <- przebieg_gry[[1]]
   
   
@@ -101,7 +101,7 @@ wizytowka <- function(strategia){
           axis.text.x = element_text(size=20),
           axis.text.y = element_text(size=20),
           axis.title.x = element_text(size=20),
-          axis.title.y = element_text(size=20),
+          axis.title.y = element_text(size=20,angle = 0),
           title = element_text(size=25),
           legend.title = element_text(size=25),
           legend.text = element_text(size=20))+
@@ -132,7 +132,7 @@ wizytowka <- function(strategia){
           axis.text.x = element_text(size=20),
           axis.text.y = element_text(size=20),
           axis.title.x = element_text(size=20),
-          axis.title.y = element_text(size=20),
+          axis.title.y = element_text(size=20,angle = 0),
           title = element_text(size=30),
           legend.text = element_text(size=20),
           legend.title = element_text(size=25))+
@@ -165,7 +165,7 @@ wizytowka <- function(strategia){
           axis.text.x = element_text(size=20),
           axis.text.y = element_text(size=20),
           axis.title.x = element_text(size=20),
-          axis.title.y = element_text(size=20),
+          axis.title.y = element_text(size=20,angle = 0),
           title = element_text(size=30),
           legend.text = element_text(size=20),
           legend.title = element_text(size=25))+
@@ -207,27 +207,24 @@ wizytowka <- function(strategia){
   statystyki <- rbind(statystyki,srednia_odcieta)
   statystyki <- rbind(statystyki,mediana_zwykla)
  
-  
+  statystyki <- t(statystyki)
   statystyki <- as.data.frame(statystyki)
   
-  colnames(statystyki) <- c(deparse(substitute(strategia)),"SuperFarmerMoc::strategia_postMDiPR","SuperFarmerRCNK::strategia_anty_yolo")
-  rownames(statystyki)<-c("minimum","maksimum","rozrzut","odchylenie\n standardowe","srednia","srednia odcieta","mediana")
+  rownames(statystyki) <- c(deparse(substitute(strategia)),"SuperFarmerMoc::strategia_postMDiPR","SuperFarmerRCNK::strategia_anty_yolo")
+  colnames(statystyki)<-c("minimum","maksimum","rozrzut","odchylenie\n standardowe","srednia","srednia odcieta","mediana")
 
   
  
   
   mytheme <- gridExtra::ttheme_default(
-    core = list(fg_params=list(cex = 2.0)),
+    core = list(fg_params=list(cex = 2.0),bg_params = list(fill = c("#d1e5f0","#d9f0d3","#e7d4e8"))),
     colhead = list(fg_params=list(cex = 1.2)),
     rowhead = list(fg_params=list(cex = 2.0)))
   
-  statystyki <- tableGrob(statystyki, theme = mytheme)
-  statystyki$widths <- unit(rep(1/ncol(statystyki), ncol(statystyki)), "npc")
-  statystyki$heights <-unit(rep(1/nrow(statystyki), nrow(statystyki)), "npc")
+  statystyki_tabela <- tableGrob(statystyki, theme = mytheme)
+  statystyki_tabela$widths <- unit(rep(1/ncol(statystyki), ncol(statystyki)), "npc")
+  statystyki_tabela$heights <-unit(rep(1/nrow(statystyki), nrow(statystyki)), "npc")
 
-  
-  
-  
   
   #ustawienia na stronie 
   
@@ -241,8 +238,8 @@ wizytowka <- function(strategia){
   
   
   #oba <-gridExtra::grid.arrange(grobs=c(tytul,wykres_gestosc, tekst,statystyki,owce_i_kroliki,swinki_krowy_koniki),layout_matrix=layout) #na rownych skalach
-  pdf("ola.pdf", width = 29.7, height = 21) # Open a new pdf file
-  grid.arrange(tytul,tekst,wykres_gestosc,statystyki,owce_i_kroliki,swinki_krowy_koniki,nrow=3,ncol=2,widths=c(14.8,14.8),heights=c(5, 8, 8))
+  pdf("asia.pdf", width = 29.7, height = 21) # Open a new pdf file
+  grid.arrange(tytul,tekst,wykres_gestosc,statystyki_tabela,owce_i_kroliki,swinki_krowy_koniki,nrow=3,ncol=2,widths=c(14.8,14.8),heights=c(5, 8, 8))
   dev.off()
   
   

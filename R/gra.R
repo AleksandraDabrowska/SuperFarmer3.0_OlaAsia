@@ -11,7 +11,8 @@
 #'@param co_zostawia_wilk wektor zawierajacy liczbe zwierzat ktora maksymalnie zostaje w stadzie po ataku wilka
 #'@param wartosc_w_krolikach wektor zawierajacy wartosci w krolikach poszczegolnych zwierzat
 #'
-#'@return liczba oznaczajaca dlugosc trwania gry
+#'@return Lista dwuelementowa - 1. macierz zawierajaca liczbę zwierzat w stadzie po kazdym ruchu;
+#'2. liczbe kolejek, ktora trwala gra.
 #'
 #'@export
 

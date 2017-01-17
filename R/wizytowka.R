@@ -176,11 +176,13 @@ wizytowka <- function(strategia){
     
   
   #tytul
-  tytul <- textGrob(paste0("Wizytowka ",deparse(substitute(strategia)),"\n  Aleksandra Dabrowska, Joanna Zbijewska"),gp=gpar(fontsize=35, col="black"))
+  tytul <- textGrob(paste0("Wizytowka\n",deparse(substitute(strategia))),gp=gpar(fontsize=60, col="black", fontface = "bold"))
   
+  #wykonanie
+  autorzy <- textGrob("Aleksandra Dabrowska,\n Joanna Zbijewska",gp=gpar(fontsize=40, col="black"))
   
   #to co chcemy dolozyc jako tekst
-  tekst <- textGrob((paste0("\nPrzedstawiamy ",deparse(substitute(strategia))," z pakietu SuperFarmer.SuperDziewczyn.\n Porownalysmy ja ze strategia strategia_postMDiPR z pakietu SuperFarmerMoc, dajaca najlepsze wyniki \n oraz strategia strategia_anty_yolo z pakietu SuperFarmerRCNK, ktora dawala najdluzsze czasy gry.\n Porownanie przedstawilysmy na wykresie gestosci,na ktorym dodatkowo zaznaczane sa srednia i mediana\n dla kazdej strategii, a takze w tabeli z podstawowymi statystykami. Jednoczesnie dla przedstawionej strategii \n przedstawiamy zmiany liczby niektorych zwierzat w stadzie podczas pojedynczej gry.")),gp=gpar(fontsize=22, col="black"))
+  tekst <- textGrob((paste0("\nPrzedstawiamy ",deparse(substitute(strategia)),"\n z pakietu SuperFarmer.SuperDziewczyn.\n Porownalysmy ja ze strategia strategia_postMDiPR \n z pakietu SuperFarmerMoc, dajaca najlepsze wyniki \n oraz strategia strategia_anty_yolo \n z pakietu SuperFarmerRCNK, ktora dawala najdluzsze gry.\n Porownanie przedstawilysmy na wykresie gestosci, \n na ktorym zaznaczone sa srednia i mediana dla kazdej strategii,\n a takze w tabeli z podstawowymi statystykami. \n Jednoczesnie dla przedstawionej strategii \n przedstawiamy zmiany liczby niektorych zwierzat w stadzie \n podczas pojedynczej gry.")),gp=gpar(fontsize=25, col="black"))
   
   #statystyki na wczesniej przygotowanych danych
   
@@ -221,32 +223,23 @@ wizytowka <- function(strategia){
   mytheme <- gridExtra::ttheme_default(
     core = list(fg_params=list(cex = 1.8),bg_params = list(fill = c("#d1e5f0","#d9f0d3","#e7d4e8"))),
     colhead = list(fg_params=list(cex = 1.8)),
-    rowhead = list(fg_params=list(cex = 1.8)))
+    rowhead = list(fg_params=list(cex = 2.0, fontface = "bold")))
   
   statystyki_tabela <- tableGrob(statystyki, theme = mytheme)
-  #statystyki_tabela$widths <- unit(rep(1/ncol(statystyki), ncol(statystyki)), "npc")
-  #statystyki_tabela$heights <-unit(rep(2/nrow(statystyki), nrow(statystyki)), "npc")
-
   
   #ustawienia na stronie 
   
-  layout <- rbind(c(1,1,1,1,2,2,2,2),
-                  c(3,3,3,3,2,2,2,2),
-                  c(3,3,3,3,2,2,2,2),
-                  c(3,3,3,3,4,4,4,4),
-                  c(5,5,5,5,6,6,6,6),
-                  c(5,5,5,5,6,6,6,6))
+  lay <- rbind(c(1,1,2,2,2,2),
+               c(3,3,2,2,2,2),
+               c(4,4,2,2,2,2),
+               c(4,4,5,5,5,5),
+               c(4,4,5,5,5,5),
+               c(6,6,6,7,7,7),
+               c(6,6,6,7,7,7))
   
-  lay <- rbind(c(1,2),
-               c(3,2),
-               c(3,2),
-               c(4,4),
-               c(5,6),
-               c(5,6))
-  
-  #oba <-gridExtra::grid.arrange(grobs=c(tytul,wykres_gestosc, tekst,statystyki_tabela,owce_i_kroliki,swinki_krowy_koniki),layout_matrix=lay) #na rownych skalach
-  pdf("ola.pdf", width = 29.7, height = 21) # Open a new pdf file
-  grid.arrange(tytul,tekst,wykres_gestosc,statystyki_tabela,owce_i_kroliki,swinki_krowy_koniki,nrow=3,ncol=2,widths=c(14.8,14.8),heights=c(5, 8, 8))
+  G <- arrangeGrob(grobs=list(tytul,wykres_gestosc,autorzy, tekst,statystyki_tabela,owce_i_kroliki,swinki_krowy_koniki),layout_matrix=lay) #na rownych skalach
+  pdf(paste0(gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),".pdf"), width = 29.7, height = 21) # Open a new pdf file
+  grid.arrange(G)
   dev.off()
   
   

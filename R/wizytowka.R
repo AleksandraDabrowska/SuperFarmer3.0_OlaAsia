@@ -50,11 +50,11 @@
 wizytowka <- function(strategia){
   #dane do wizytowki
 
-  przebieg_gry <- SuperFarmer.SuperDziewczyn::gra(SuperFarmer.SuperDziewczyn::strategia_owce)
+  przebieg_gry <- SuperFarmer.SuperDziewczyn::gra(strategia)
   macierz_przebiegu_gry <- przebieg_gry[[1]]
   
   
-  przebieg_100_gier_superdziewczyn <- SuperFarmer.SuperDziewczyn::badaj_gre(SuperFarmer.SuperDziewczyn::strategia_owce,powtorzenia = 100)
+  przebieg_100_gier_superdziewczyn <- SuperFarmer.SuperDziewczyn::badaj_gre(strategia,powtorzenia = 100)
   przebieg_100_gier_moc <- SuperFarmerMoc::badaj_gre(SuperFarmerMoc::strategia_postMDiPR,liczba_prob=100)
   przebieg_100_gier_rcnk <- SuperFarmer.SuperDziewczyn::badaj_gre(SuperFarmerRCNK::strategia_anty_yolo,powtorzenia=100)
   
@@ -70,11 +70,11 @@ wizytowka <- function(strategia){
   colnames(przebieg_100_gier_moc) <- "Liczba_ruchow"
   colnames(przebieg_100_gier_rcnk) <- "Liczba_ruchow"
   
-  przebieg_100_gier_superdziewczyn <-cbind(przebieg_100_gier_superdziewczyn, sample(deparse(substitute(strategia)),100, replace=TRUE))
+  przebieg_100_gier_superdziewczyn <-cbind(przebieg_100_gier_superdziewczyn, sample(gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),100, replace=TRUE))
   
-  przebieg_100_gier_moc <-cbind(przebieg_100_gier_moc, sample("SuperFarmerMoc::strategia_postMDiPR",100, replace=TRUE))
+  przebieg_100_gier_moc <-cbind(przebieg_100_gier_moc, sample("strategia_postMDiPR",100, replace=TRUE))
   
-  przebieg_100_gier_rcnk <-cbind(przebieg_100_gier_rcnk, sample("SuperFarmerRCNK::strategia_anty_yolo",100, replace=TRUE))
+  przebieg_100_gier_rcnk <-cbind(przebieg_100_gier_rcnk, sample("strategia_anty_yolo",100, replace=TRUE))
   
   colnames(przebieg_100_gier_superdziewczyn)[2] <- "Strategia"
   colnames(przebieg_100_gier_moc)[2] <- "Strategia"
@@ -96,7 +96,7 @@ wizytowka <- function(strategia){
     geom_vline(data=mediana, aes(xintercept=mediana$grp.median, color=mediana$Strategia))+
     ylab("Liczba gier")+
     xlab("Liczba ruchow")+
-    ggtitle(paste0("Porownanie gestosci dla strategii ",deparse(substitute(strategia)),",\nSuperFarmerMoc::strategia_postMDiPR i SuperFarmerRCNK::strategia_anty_yolo"))+
+    ggtitle(paste0("Porownanie gestosci dla strategii ",gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),"\n strategia_postMDiPR"," i strategia_anty_yolo"))+
     theme(panel.background = element_rect(fill="white"),
           axis.text.x = element_text(size=20),
           axis.text.y = element_text(size=20),
@@ -104,7 +104,9 @@ wizytowka <- function(strategia){
           axis.title.y = element_text(size=20,angle = 0),
           title = element_text(size=25),
           legend.title = element_text(size=25),
-          legend.text = element_text(size=20))+
+          legend.text = element_text(size=20),
+          legend.justification=c(1,0), 
+          legend.position=c(1,1))+
     labs(fill="Strategia\n",color="Strategia\n")
   
   
@@ -210,16 +212,16 @@ wizytowka <- function(strategia){
   statystyki <- t(statystyki)
   statystyki <- as.data.frame(statystyki)
   
-  rownames(statystyki) <- c(deparse(substitute(strategia)),"SuperFarmerMoc::strategia_postMDiPR","SuperFarmerRCNK::strategia_anty_yolo")
+  rownames(statystyki) <- c(gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),"strategia_postMDiPR","strategia_anty_yolo")
   colnames(statystyki)<-c("minimum","maksimum","rozrzut","odchylenie\n standardowe","srednia","srednia odcieta","mediana")
 
   
  
   
   mytheme <- gridExtra::ttheme_default(
-    core = list(fg_params=list(cex = 2.0),bg_params = list(fill = c("#d1e5f0","#d9f0d3","#e7d4e8"))),
-    colhead = list(fg_params=list(cex = 2.0)),
-    rowhead = list(fg_params=list(cex = 1.2)))
+    core = list(fg_params=list(cex = 1.8),bg_params = list(fill = c("#d1e5f0","#d9f0d3","#e7d4e8"))),
+    colhead = list(fg_params=list(cex = 1.8)),
+    rowhead = list(fg_params=list(cex = 1.8)))
   
   statystyki_tabela <- tableGrob(statystyki, theme = mytheme)
   #statystyki_tabela$widths <- unit(rep(1/ncol(statystyki), ncol(statystyki)), "npc")
@@ -243,7 +245,7 @@ wizytowka <- function(strategia){
                c(5,6))
   
   #oba <-gridExtra::grid.arrange(grobs=c(tytul,wykres_gestosc, tekst,statystyki_tabela,owce_i_kroliki,swinki_krowy_koniki),layout_matrix=lay) #na rownych skalach
-  pdf("asia.pdf", width = 29.7, height = 21) # Open a new pdf file
+  pdf("ola.pdf", width = 29.7, height = 21) # Open a new pdf file
   grid.arrange(tytul,tekst,wykres_gestosc,statystyki_tabela,owce_i_kroliki,swinki_krowy_koniki,nrow=3,ncol=2,widths=c(14.8,14.8),heights=c(5, 8, 8))
   dev.off()
   

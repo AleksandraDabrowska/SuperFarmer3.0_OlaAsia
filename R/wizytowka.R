@@ -30,6 +30,7 @@
 #'@importFrom gridExtra grid.arrange
 #'@importFrom gridExtra tableGrob
 #'@importFrom gridExtra ttheme_default
+#'@importFrom gridExtra arrangeGrob
 #'
 #'@importFrom stats sd
 #'@importFrom stats median
@@ -96,7 +97,7 @@ wizytowka <- function(strategia){
     geom_vline(data=mediana, aes(xintercept=mediana$grp.median, color=mediana$Strategia))+
     ylab("Liczba gier")+
     xlab("Liczba ruchow")+
-    ggtitle(paste0("Porownanie gestosci dla strategii ",gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),"\n strategia_postMDiPR"," i strategia_anty_yolo"))+
+    ggtitle(paste0("Porownanie gestosci dla strategii ",gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia))))," strategia_postMDiPR"," i strategia_anty_yolo"))+
     theme(panel.background = element_rect(fill="white"),
           axis.text.x = element_text(size=20),
           axis.text.y = element_text(size=20),
@@ -104,9 +105,7 @@ wizytowka <- function(strategia){
           axis.title.y = element_text(size=20,angle = 0),
           title = element_text(size=25),
           legend.title = element_text(size=25),
-          legend.text = element_text(size=20),
-          legend.justification=c(1,0), 
-          legend.position=c(1,1))+
+          legend.text = element_text(size=20))+
     labs(fill="Strategia\n",color="Strategia\n")
   
   
@@ -176,13 +175,13 @@ wizytowka <- function(strategia){
     
   
   #tytul
-  tytul <- textGrob(paste0("Wizytowka\n",deparse(substitute(strategia))),gp=gpar(fontsize=60, col="black", fontface = "bold"))
+  tytul <- textGrob(paste0("Wizytowka\n SuperFarmer.SuperDziewczyn\n ",gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia))))),gp=gpar(fontsize=48, col="black", fontface = "bold"))
   
   #wykonanie
   autorzy <- textGrob("Aleksandra Dabrowska,\n Joanna Zbijewska",gp=gpar(fontsize=40, col="black"))
   
   #to co chcemy dolozyc jako tekst
-  tekst <- textGrob((paste0("\nPrzedstawiamy ",deparse(substitute(strategia)),"\n z pakietu SuperFarmer.SuperDziewczyn.\n Porownalysmy ja ze strategia strategia_postMDiPR \n z pakietu SuperFarmerMoc, dajaca najlepsze wyniki \n oraz strategia strategia_anty_yolo \n z pakietu SuperFarmerRCNK, ktora dawala najdluzsze gry.\n Porownanie przedstawilysmy na wykresie gestosci, \n na ktorym zaznaczone sa srednia i mediana dla kazdej strategii,\n a takze w tabeli z podstawowymi statystykami. \n Jednoczesnie dla przedstawionej strategii \n przedstawiamy zmiany liczby niektorych zwierzat w stadzie \n podczas pojedynczej gry.")),gp=gpar(fontsize=25, col="black"))
+  tekst <- textGrob((paste0("\nPrzedstawiamy ",gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),"\n z pakietu SuperFarmer.SuperDziewczyn.\n Porownalysmy ja ze strategia strategia_postMDiPR \n z pakietu SuperFarmerMoc, dajaca najlepsze wyniki \n oraz strategia strategia_anty_yolo \n z pakietu SuperFarmerRCNK, ktora dawala najdluzsze gry.\n Porownanie przedstawilysmy na wykresie gestosci, \n na ktorym zaznaczone sa srednia i mediana dla kazdej strategii,\n a takze w tabeli z podstawowymi statystykami. \n Jednoczesnie dla przedstawionej strategii \n przedstawiamy zmiany liczby niektorych zwierzat w stadzie \n podczas pojedynczej gry.")),gp=gpar(fontsize=25, col="black"))
   
   #statystyki na wczesniej przygotowanych danych
   

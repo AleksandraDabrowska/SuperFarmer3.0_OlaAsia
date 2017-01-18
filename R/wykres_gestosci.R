@@ -13,7 +13,6 @@
 #' 
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 aes
-#' @importFrom ggplot2 geom_point
 #' @importFrom ggplot2 geom_density
 #' @importFrom ggplot2 geom_vline
 #' @importFrom ggplot2 ggtitle

@@ -5,8 +5,6 @@
 #'@param strategia Wybrana strategia, dla ktorej wizytowke chcemy uzyskac.
 #'
 #'
-#'@importFrom ggthemes theme_tufte
-#'
 #'@importFrom plyr ddply
 #'@importFrom plyr summarise
 #'
@@ -19,14 +17,8 @@
 #'@importFrom gridExtra ttheme_default
 #'@importFrom gridExtra arrangeGrob
 #'
-#'@importFrom stats sd
-#'@importFrom stats median
-#'@importFrom stats quantile
-#'@importFrom optimbase transpose
-#'
 #'@importFrom grDevices dev.off
 #'@importFrom grDevices pdf
-#'
 #'
 #'
 #'@examples
@@ -67,13 +59,13 @@ wizytowka <- function(strategia){
   przebieg <- rbind(przebieg,przebieg_100_gier_rcnk)
   
   srednia <-ddply(przebieg, "Strategia", summarise, grp.mean=mean(Liczba_ruchow))
-  mediana <- ddply(przebieg,"Strategia",summarise,grp.median=median(Liczba_ruchow))
+  mediana_wykres <- ddply(przebieg,"Strategia",summarise,grp.median=median(Liczba_ruchow))
   
   #wykres gestosci dla najlepszej strategii z pakietu moc, najgorszej z rcnk i naszej
   nazwa <- gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia))))
-  wykres_gestosc <- SuperFarmer.SuperDziewczyn::wykres_gestosci(przebieg,nazwa,mediana,srednia)
+  wykres_gestosc <- SuperFarmer.SuperDziewczyn::wykres_gestosci(przebieg,nazwa,mediana_wykres,srednia)
   
-  #wykres zwierzatka
+  #dane do wykresu owiec i krolikow
   kroliki <- przebieg_gry[,c(1,8)]
   kroliki <- cbind(kroliki,sample("krolik",nrow(kroliki),replace=TRUE))
   colnames(kroliki)[3] <- "zwierze"
@@ -82,29 +74,14 @@ wizytowka <- function(strategia){
   owce <- cbind(owce,sample("owca",nrow(owce),replace=TRUE))
   colnames(owce)[3] <- "zwierze"
   colnames(owce)[1] <- "liczba"
-  
+
   zwierzatka <- rbind(kroliki,owce)
   
-  #teraz wykres pokazujacy rozlozenie zwierzatek w stadzie dla kazdej kolejki
+  #teraz wykres pokazujacy rozlozenie owiec i krolikow w stadzie dla kazdej kolejki
+  tytul1 <- "Liczba krolikow i owiec w pojedynczej grze"
+  owce_i_kroliki <- wykres_zwierzat(zwierzatka,tytul1)
   
-  owce_i_kroliki <- ggplot(zwierzatka,aes(zwierzatka$Numer_kolejki,zwierzatka$liczba,col=zwierzatka$zwierze,shape=zwierzatka$zwierze))+
-    geom_point(size=3)+
-    ylab("Liczba zwierzatek")+
-    xlab("Numer kolejki")+
-    ggtitle("Liczba krolikow i owiec w pojedynczej grze")+
-    theme(panel.background = element_rect(fill="white"),
-          axis.text.x = element_text(size=20),
-          axis.text.y = element_text(size=20),
-          axis.title.x = element_text(size=20),
-          axis.title.y = element_text(size=20,angle = 0),
-          title = element_text(size=30),
-          legend.text = element_text(size=20),
-          legend.title = element_text(size=25))+
-    labs(color="Zwierze\n",shape="Zwierze\n")#+
-    #theme_tufte()
-    
-    
-  #wykres konie, krowy swinki
+  #dane do wykresu konie, krowy i swinki
   swinki <- przebieg_gry[,c(3,8)]
   swinki <- cbind(swinki,sample("swinia",nrow(swinki),replace=TRUE))
   colnames(swinki)[3] <- "zwierze"
@@ -121,23 +98,9 @@ wizytowka <- function(strategia){
   zwierzatka_duze <- rbind(swinki,krowy)
   zwierzatka_duze <- rbind(zwierzatka_duze,konie)
 
-  swinki_krowy_koniki <- ggplot(zwierzatka_duze,aes(zwierzatka_duze$Numer_kolejki,zwierzatka_duze$liczba,col=zwierzatka_duze$zwierze,shape=zwierzatka_duze$zwierze))+
-    geom_point(size=3)+
-    ylab("Liczba zwierzatek")+
-    xlab("Numer kolejki")+
-    ggtitle("Liczba swinek, krow i konikow w pojedynczej grze")+
-    theme(panel.background = element_rect(fill="white"),
-          axis.text.x = element_text(size=20),
-          axis.text.y = element_text(size=20),
-          axis.title.x = element_text(size=20),
-          axis.title.y = element_text(size=20,angle = 0),
-          title = element_text(size=30),
-          legend.text = element_text(size=20),
-          legend.title = element_text(size=25))+
-    labs(color="Zwierze\n",shape="Zwierze\n")#+
-    #theme_tufte()
-  
-    
+  #teraz wykres dla liczebnosci koni, krow i swin dla kazdej kolejki
+  tytul2 <- "Liczba swinek, krow i konikow w pojedynczej grze"
+  swinki_krowy_koniki <- wykres_zwierzat(zwierzatka_duze,tytul2)
   
   #tytul
   tytul <- textGrob(paste0("Wizytowka\n SuperFarmer.SuperDziewczyn\n ",gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia))))),gp=gpar(fontsize=48, col="black", fontface = "bold"))
@@ -149,67 +112,22 @@ wizytowka <- function(strategia){
   tekst <- textGrob((paste0("\nPrzedstawiamy ",gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),"\n z pakietu SuperFarmer.SuperDziewczyn.\n Porownalysmy ja ze strategia strategia_postMDiPR \n z pakietu SuperFarmerMoc, dajaca najlepsze wyniki \n oraz strategia strategia_anty_yolo \n z pakietu SuperFarmerRCNK, ktora dawala najdluzsze gry.\n Porownanie przedstawilysmy na wykresie gestosci, \n na ktorym zaznaczone sa srednia i mediana dla kazdej strategii,\n a takze w tabeli z podstawowymi statystykami. \n Jednoczesnie dla przedstawionej strategii \n przedstawiamy zmiany liczby niektorych zwierzat w stadzie \n podczas pojedynczej gry.")),gp=gpar(fontsize=25, col="black"))
   
   #statystyki na wczesniej przygotowanych danych
-  
-  minimum <- c(min(przebieg_100_gier_superdziewczyn$Liczba_ruchow),min(przebieg_100_gier_moc$Liczba_ruchow),min(przebieg_100_gier_rcnk$Liczba_ruchow))
-  
-  maksimum <- c(max(przebieg_100_gier_superdziewczyn$Liczba_ruchow),max(przebieg_100_gier_moc$Liczba_ruchow),max(przebieg_100_gier_rcnk$Liczba_ruchow))
-  
-  odchylenie <- c(sd(przebieg_100_gier_superdziewczyn$Liczba_ruchow),sd(przebieg_100_gier_moc$Liczba_ruchow),sd(przebieg_100_gier_rcnk$Liczba_ruchow))
-  odchylenie <- round(odchylenie, digits = 2)
-  
-  srednia_zwykla <- c(mean(przebieg_100_gier_superdziewczyn$Liczba_ruchow),mean(przebieg_100_gier_moc$Liczba_ruchow),mean(przebieg_100_gier_rcnk$Liczba_ruchow))
-  
-  srednia_odcieta <- c(mean(przebieg_100_gier_superdziewczyn$Liczba_ruchow,trim=0.2),mean(przebieg_100_gier_moc$Liczba_ruchow,trim=0.2),mean(przebieg_100_gier_rcnk$Liczba_ruchow,trim=0.2))
-  
-  srednia_odcieta <- round(srednia_odcieta, digits = 2)
-  
-  
-  mediana_zwykla <- c(median(przebieg_100_gier_superdziewczyn$Liczba_ruchow),median(przebieg_100_gier_moc$Liczba_ruchow),median(przebieg_100_gier_rcnk$Liczba_ruchow))
-  
-  rozrzut <- maksimum-minimum
-  
-  statystyki <- rbind(minimum,maksimum)
-  statystyki <- rbind(statystyki,rozrzut)
-  statystyki <- rbind(statystyki,odchylenie)
-  statystyki <- rbind(statystyki,srednia_zwykla)
-  statystyki <- rbind(statystyki,srednia_odcieta)
-  statystyki <- rbind(statystyki,mediana_zwykla)
- 
-  statystyki <- t(statystyki)
-  statystyki <- as.data.frame(statystyki)
-  
-  rownames(statystyki) <- c(gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),"strategia_postMDiPR","strategia_anty_yolo")
-  colnames(statystyki)<-c("minimum","maksimum","rozrzut","odchylenie\n standardowe","srednia","srednia odcieta","mediana")
+  nazwa_strat <- gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia))))
+  statystyki <- tabela_statystyk(przebieg_100_gier_superdziewczyn,przebieg_100_gier_moc,przebieg_100_gier_rcnk,nazwa_strat)
   
   #decyle
-  decyle_superfarmer <- quantile(przebieg_100_gier_superdziewczyn$Liczba_ruchow,prob=c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9))
-  
-  decyle_moc <- quantile(przebieg_100_gier_moc$Liczba_ruchow,prob=c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9))
-
-  decyle_rcnk <- quantile(przebieg_100_gier_rcnk$Liczba_ruchow,prob=c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9))
-  
-  
-  decyle <- rbind(decyle_superfarmer,decyle_moc)
-  decyle <- rbind(decyle, decyle_rcnk)
-  
-  decyle <- as.data.frame(decyle)
-  
-  rownames(decyle) <- c(gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),"strategia_postMDiPR","strategia_anty_yolo")
-  
-  
+  decyle <- tabela_decyli(przebieg_100_gier_superdziewczyn,przebieg_100_gier_moc,przebieg_100_gier_rcnk,nazwa_strat)
  
-  
+  #wyglad tabeli
   mytheme <- gridExtra::ttheme_default(
     core = list(fg_params=list(cex = 1.8),bg_params = list(fill = c("#d1e5f0","#d9f0d3","#e7d4e8"))),
     colhead = list(fg_params=list(cex = 1.8)),
-    rowhead = list(fg_params=list(cex = 2.0, fontface = "bold")))
+    rowhead = list(fg_params=list(cex = 1.9, fontface = "bold")))
   
   statystyki_tabela <- tableGrob(statystyki, theme = mytheme)
-  
   decyle_tabela <- tableGrob(decyle,theme=mytheme)
   
   #ustawienia na stronie 
-  
   lay <- rbind(c(1,1,2,2,2,2),
                c(3,3,2,2,2,2),
                c(4,4,2,2,2,2),
@@ -218,10 +136,10 @@ wizytowka <- function(strategia){
                c(7,7,7,8,8,8),
                c(7,7,7,8,8,8))
   
+  #zapisywanie do pliku
   G <- arrangeGrob(grobs=list(tytul,wykres_gestosc,autorzy, tekst,statystyki_tabela,decyle_tabela,owce_i_kroliki,swinki_krowy_koniki),layout_matrix=lay) #na rownych skalach
   pdf(paste0(gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),".pdf"), width = 29.7, height = 21) # Open a new pdf file
   grid.arrange(G)
   dev.off()
-  
   
 }

@@ -33,30 +33,30 @@ wizytowka <- function(strategia){
   przebieg_gry <- SuperFarmer.SuperDziewczyn::gra(strategia)
   macierz_przebiegu_gry <- przebieg_gry[[1]]
   
-  przebieg_100_gier_superdziewczyn <- SuperFarmer.SuperDziewczyn::badaj_gre(strategia,powtorzenia = 100)
-  przebieg_100_gier_moc <- SuperFarmerMoc::badaj_gre(SuperFarmerMoc::strategia_postMDiPR,liczba_prob=100)
-  przebieg_100_gier_rcnk <- SuperFarmer.SuperDziewczyn::badaj_gre(SuperFarmerRCNK::strategia_anty_yolo,powtorzenia=100)
+  przebieg_1000_gier_superdziewczyn <- SuperFarmer.SuperDziewczyn::badaj_gre(strategia,powtorzenia = 1000)
+  przebieg_1000_gier_moc <- SuperFarmerMoc::badaj_gre(SuperFarmerMoc::strategia_postMDiPR,liczba_prob=1000)
+  przebieg_1000_gier_rcnk <- SuperFarmer.SuperDziewczyn::badaj_gre(SuperFarmerRCNK::strategia_anty_yolo,powtorzenia=1000)
 
   #jako ramki danych
   macierz_przebiegu_gry<-cbind(macierz_przebiegu_gry,c(1:przebieg_gry[[2]]))
   colnames(macierz_przebiegu_gry)[8] <- "Numer_kolejki"
   przebieg_gry <- as.data.frame(macierz_przebiegu_gry)
   
-  przebieg_100_gier_superdziewczyn <- as.data.frame(przebieg_100_gier_superdziewczyn)
-  przebieg_100_gier_moc <- as.data.frame(przebieg_100_gier_moc)
-  przebieg_100_gier_rcnk <- as.data.frame(przebieg_100_gier_rcnk)
-  colnames(przebieg_100_gier_superdziewczyn) <- "Liczba_ruchow"
-  colnames(przebieg_100_gier_moc) <- "Liczba_ruchow"
-  colnames(przebieg_100_gier_rcnk) <- "Liczba_ruchow"
-  przebieg_100_gier_superdziewczyn <-cbind(przebieg_100_gier_superdziewczyn, sample(gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),100, replace=TRUE))
-  przebieg_100_gier_moc <-cbind(przebieg_100_gier_moc, sample("strategia_postMDiPR",100, replace=TRUE))
-  przebieg_100_gier_rcnk <-cbind(przebieg_100_gier_rcnk, sample("strategia_anty_yolo",100, replace=TRUE))
-  colnames(przebieg_100_gier_superdziewczyn)[2] <- "Strategia"
-  colnames(przebieg_100_gier_moc)[2] <- "Strategia"
-  colnames(przebieg_100_gier_rcnk)[2] <- "Strategia"
+  przebieg_1000_gier_superdziewczyn <- as.data.frame(przebieg_1000_gier_superdziewczyn)
+  przebieg_1000_gier_moc <- as.data.frame(przebieg_1000_gier_moc)
+  przebieg_1000_gier_rcnk <- as.data.frame(przebieg_1000_gier_rcnk)
+  colnames(przebieg_1000_gier_superdziewczyn) <- "Liczba_ruchow"
+  colnames(przebieg_1000_gier_moc) <- "Liczba_ruchow"
+  colnames(przebieg_1000_gier_rcnk) <- "Liczba_ruchow"
+  przebieg_1000_gier_superdziewczyn <-cbind(przebieg_1000_gier_superdziewczyn, sample(gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),100, replace=TRUE))
+  przebieg_1000_gier_moc <-cbind(przebieg_1000_gier_moc, sample("strategia_postMDiPR",100, replace=TRUE))
+  przebieg_1000_gier_rcnk <-cbind(przebieg_1000_gier_rcnk, sample("strategia_anty_yolo",100, replace=TRUE))
+  colnames(przebieg_1000_gier_superdziewczyn)[2] <- "Strategia"
+  colnames(przebieg_1000_gier_moc)[2] <- "Strategia"
+  colnames(przebieg_1000_gier_rcnk)[2] <- "Strategia"
   
-  przebieg <- rbind(przebieg_100_gier_superdziewczyn,przebieg_100_gier_moc)
-  przebieg <- rbind(przebieg,przebieg_100_gier_rcnk)
+  przebieg <- rbind(przebieg_1000_gier_superdziewczyn,przebieg_1000_gier_moc)
+  przebieg <- rbind(przebieg,przebieg_1000_gier_rcnk)
   
   srednia <-ddply(przebieg, "Strategia", summarise, grp.mean=mean(Liczba_ruchow))
   mediana_wykres <- ddply(przebieg,"Strategia",summarise,grp.median=median(Liczba_ruchow))
@@ -113,10 +113,10 @@ wizytowka <- function(strategia){
   
   #statystyki na wczesniej przygotowanych danych
   nazwa_strat <- gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia))))
-  statystyki <- tabela_statystyk(przebieg_100_gier_superdziewczyn,przebieg_100_gier_moc,przebieg_100_gier_rcnk,nazwa_strat)
+  statystyki <- tabela_statystyk(przebieg_1000_gier_superdziewczyn,przebieg_1000_gier_moc,przebieg_1000_gier_rcnk,nazwa_strat)
   
   #decyle
-  decyle <- tabela_decyli(przebieg_100_gier_superdziewczyn,przebieg_100_gier_moc,przebieg_100_gier_rcnk,nazwa_strat)
+  decyle <- tabela_decyli(przebieg_1000_gier_superdziewczyn,przebieg_1000_gier_moc,przebieg_1000_gier_rcnk,nazwa_strat)
  
   #wyglad tabeli
   mytheme <- gridExtra::ttheme_default(

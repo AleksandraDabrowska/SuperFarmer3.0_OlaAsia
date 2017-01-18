@@ -249,7 +249,7 @@ wizytowka <- function(strategia){
   
   statystyki_tabela <- tableGrob(statystyki, theme = mytheme)
   
-  decyle_tabela <- tableGrob(deycle,theme=mytheme)
+  decyle_tabela <- tableGrob(decyle,theme=mytheme)
   
   #ustawienia na stronie 
   
@@ -257,11 +257,11 @@ wizytowka <- function(strategia){
                c(3,3,2,2,2,2),
                c(4,4,2,2,2,2),
                c(4,4,5,5,5,5),
-               c(4,4,5,5,5,5),
-               c(6,6,6,7,7,7),
-               c(6,6,6,7,7,7))
+               c(4,4,6,6,6,6),
+               c(7,7,7,8,8,8),
+               c(7,7,7,8,8,8))
   
-  G <- arrangeGrob(grobs=list(tytul,wykres_gestosc,autorzy, tekst,statystyki_tabela,owce_i_kroliki,swinki_krowy_koniki),layout_matrix=lay) #na rownych skalach
+  G <- arrangeGrob(grobs=list(tytul,wykres_gestosc,autorzy, tekst,statystyki_tabela,decyle_tabela,owce_i_kroliki,swinki_krowy_koniki),layout_matrix=lay) #na rownych skalach
   pdf(paste0(gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),".pdf"), width = 29.7, height = 21) # Open a new pdf file
   grid.arrange(G)
   dev.off()

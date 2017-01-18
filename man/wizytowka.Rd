@@ -2,15 +2,15 @@
 % Please edit documentation in R/wizytowka.R
 \name{wizytowka}
 \alias{wizytowka}
-\title{Wizytowka do strategii z Pakietu SuperFarmer.SuperDziewczyn}
+\title{Wizytowka do strategii z Pakietu SuperFarmer.SuperDziewczyn.}
 \usage{
 wizytowka(strategia)
 }
 \arguments{
-\item{strategia}{wybrana strategia}
+\item{strategia}{Wybrana strategia, dla ktorej wizytowke chcemy uzyskac.}
 }
 \description{
-Funkcja wizytowka generuje wizytowke w formacie pdf opisujaca wybrana strategie.
+Funkcja wizytowka generuje wizytowke w formacie pdf opisujaca i wizualizujaca wybrana strategie.
 }
 \examples{
 \dontrun{

@@ -1,7 +1,7 @@
 Package: SuperFarmer.SuperDziewczyn
 Title: SuperFarmer
-Version: 0.0.1.003
-Authors@R: c(person("Aleksandra", "Dabrowska", email = "ad345131@students.mimuw.edu.pl", role = "cre"),person("Hanna","Kranas", email = "hk335070@students.mimuw.edu.pl", role = "aut"))
+Version: 0.0.1.05
+Authors@R: c(person("Aleksandra", "Dabrowska", email = "ad345131@students.mimuw.edu.pl", role = "cre"),person("Hanna","Kranas", email = "hk335070@students.mimuw.edu.pl", role = "aut"),person("Joanna","Zbijewska", email = "jz383749@students.mimuw.edu.pl", role = "ctb"))
 Description: Pakiet zawiera funkcje potrzebne do symulacji gry w SuperFarmera. Wynikiem wywolania glownej funkcji badaj_gre jest wektor zawierajacy dlugosci trwania poszczegolnych gier. Dostepna jest funkcja wizualizujaca rozklad danych oraz funkcja podajaca podstawowe statystyki zwiazane z rozkladem czasu trwania gier przy podanej liczbie powtorzen i ustalonej strategii. W pakiecie zawarte sa 3 przykladowe strategie oparte na pierwotnych zalozeniach gry w SuperFarmera. Zarowno funkcje gra jak i badaj_gre mozna parametryzowac na wiele sposobow co zapewnia elastycznosc.
 Depends: R (>= 3.0.0)
 License: GPL

@@ -37,6 +37,7 @@
 #'
 #'@importFrom stats sd
 #'@importFrom stats median
+#'@importFrom stats quantile
 #'@importFrom optimbase transpose
 #'
 #'@importFrom grDevices dev.off
@@ -222,7 +223,22 @@ wizytowka <- function(strategia){
   
   rownames(statystyki) <- c(gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),"strategia_postMDiPR","strategia_anty_yolo")
   colnames(statystyki)<-c("minimum","maksimum","rozrzut","odchylenie\n standardowe","srednia","srednia odcieta","mediana")
+  
+  #decyle
+  decyle_superfarmer <- quantile(przebieg_100_gier_superdziewczyn$Liczba_ruchow,prob=c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9))
+  
+  decyle_moc <- quantile(przebieg_100_gier_moc$Liczba_ruchow,prob=c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9))
 
+  decyle_rcnk <- quantile(przebieg_100_gier_rcnk$Liczba_ruchow,prob=c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9))
+  
+  
+  decyle <- rbind(decyle_superfarmer,decyle_moc)
+  decyle <- rbind(decyle, decyle_rcnk)
+  
+  decyle <- as.data.frame(decyle)
+  
+  rownames(decyle) <- c(gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),"strategia_postMDiPR","strategia_anty_yolo")
+  
   
  
   
@@ -232,6 +248,8 @@ wizytowka <- function(strategia){
     rowhead = list(fg_params=list(cex = 2.0, fontface = "bold")))
   
   statystyki_tabela <- tableGrob(statystyki, theme = mytheme)
+  
+  decyle_tabela <- tableGrob(deycle,theme=mytheme)
   
   #ustawienia na stronie 
   

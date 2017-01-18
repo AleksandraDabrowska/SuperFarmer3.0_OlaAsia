@@ -19,6 +19,9 @@
 #'@importFrom ggplot2 theme
 #'@importFrom ggplot2 element_rect
 #'@importFrom ggplot2 labs
+#'@importFrom ggplot2 geom_text
+#'
+#'@importFrom ggthemes theme_tufte
 #'
 #'@importFrom plyr ddply
 #'@importFrom plyr summarise
@@ -84,17 +87,18 @@ wizytowka <- function(strategia){
   przebieg <- rbind(przebieg_100_gier_superdziewczyn,przebieg_100_gier_moc)
   przebieg <- rbind(przebieg,przebieg_100_gier_rcnk)
   
-  srednia <-ddply(przebieg, "Strategia", summarise, grp.mean=mean(przebieg$Liczba_ruchow))
   
-  mediana <- ddply(przebieg,"Strategia",summarise,grp.median=median(przebieg$Liczba_ruchow))
+  srednia <-ddply(przebieg, "Strategia", summarise, grp.mean=mean(Liczba_ruchow))
+  
+  mediana <- ddply(przebieg,"Strategia",summarise,grp.median=median(Liczba_ruchow))
   #wykres gestosci dla najlepszej strategii z pakietu moc, najgorszej z rcnk i naszej - owce
   
   wykres_gestosc <- ggplot(przebieg, aes(przebieg$Liczba_ruchow,colour=przebieg$Strategia,fill=przebieg$Strategia))+
     geom_density(position="stack")+
-    scale_color_manual(values=c("#2166ac","#1b7837","#762a83"))+
+    scale_color_manual(name="Srednia",values=c("#2166ac","#1b7837","#762a83"))+
     scale_fill_manual(values=c("#d1e5f0","#d9f0d3","#e7d4e8"))+
-    geom_vline(data=srednia, aes(xintercept=srednia$grp.mean, color=srednia$Strategia),linetype="dashed")+
-    geom_vline(data=mediana, aes(xintercept=mediana$grp.median, color=mediana$Strategia))+
+    geom_vline(data=srednia, aes(xintercept=srednia$grp.mean, color=srednia$Strategia), size=1.5)+
+    geom_vline(data=mediana, aes(xintercept=as.numeric(mediana$grp.median), color=mediana$Strategia),size=1.5,linetype="dashed")+
     ylab("Liczba gier")+
     xlab("Liczba ruchow")+
     ggtitle(paste0("Porownanie gestosci dla strategii ",gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia))))," strategia_postMDiPR"," i strategia_anty_yolo"))+
@@ -106,7 +110,8 @@ wizytowka <- function(strategia){
           title = element_text(size=25),
           legend.title = element_text(size=25),
           legend.text = element_text(size=20))+
-    labs(fill="Strategia\n",color="Strategia\n")
+    labs(fill="Strategia\n")
+    
   
   
   
@@ -137,7 +142,8 @@ wizytowka <- function(strategia){
           title = element_text(size=30),
           legend.text = element_text(size=20),
           legend.title = element_text(size=25))+
-    labs(color="Zwierze\n",shape="Zwierze\n")
+    labs(color="Zwierze\n",shape="Zwierze\n")#+
+    #theme_tufte()
     
     
   #wykres konie, krowy swinki
@@ -170,7 +176,8 @@ wizytowka <- function(strategia){
           title = element_text(size=30),
           legend.text = element_text(size=20),
           legend.title = element_text(size=25))+
-    labs(color="Zwierze\n",shape="Zwierze\n")
+    labs(color="Zwierze\n",shape="Zwierze\n")#+
+    #theme_tufte()
   
     
   

@@ -21,7 +21,13 @@ tabela_statystyk <- function(dane1, dane2, dane3, strat){
   srednia_odcieta <- c(mean(dane1$Liczba_ruchow,trim=0.2),mean(dane2$Liczba_ruchow,trim=0.2),mean(dane3$Liczba_ruchow,trim=0.2))
   srednia_odcieta <- round(srednia_odcieta, digits = 2)
   mediana <- c(median(dane1$Liczba_ruchow),median(dane2$Liczba_ruchow),median(dane3$Liczba_ruchow))
+  
+  
   rozrzut <- maksimum-minimum
+  odchylenie <- round(odchylenie, 0)
+  srednia_zwykla <- round(srednia_zwykla, 0)
+  srednia_odcieta <- round(srednia_odcieta,0)
+  mediana <- round(mediana,0)
   
   statystyki <- rbind(minimum,maksimum)
   statystyki <- rbind(statystyki,rozrzut)

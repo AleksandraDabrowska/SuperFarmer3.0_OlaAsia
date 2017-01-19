@@ -16,8 +16,14 @@ tabela_decyli <- function(dane1, dane2, dane3, strat){
   decyle_moc <- quantile(dane2$Liczba_ruchow,prob=c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9))
   decyle_rcnk <- quantile(dane3$Liczba_ruchow,prob=c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9))
   
+  decyle_superfarmer <- round(decyle_superfarmer)
+  deycle_moc <- round(decyle_moc)
+  decyle_rcnk <- round(decyle_rcnk)
+  
   decyle <- rbind(decyle_superfarmer,decyle_moc)
   decyle <- rbind(decyle, decyle_rcnk)
+  
+  
 
   decyle <- as.data.frame(decyle)
   

@@ -7,8 +7,7 @@
 wykres_gestosci(dane, strat, med, sr)
 }
 \arguments{
-\item{dane}{Jest ramka danych zawierjaca trzy grupy dnaych do rysowania gestosci zawierajace nazwy strategii w kolumnie Strategia
-oraz liczby ruchow w pojedynczej grze w kolumnie Liczba_ruchow.}
+\item{dane}{Jest ramka danych zawierjaca trzy grupy dnaych do rysowania gestosci zawierajace nazwy strategii w kolumnie Strategia oraz liczby ruchow w pojedynczej grze w kolumnie Liczba_ruchow.}
 
 \item{strat}{Nazwa strategii, ktora na wykresie porownujemy.}
 

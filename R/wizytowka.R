@@ -117,7 +117,9 @@ wizytowka <- function(strategia,liczba_powtorzen = 1000){
     rowhead = list(fg_params=list(cex = 1.9, fontface = "bold")))
 
   statystyki_tabela <- tableGrob(statystyki, theme = mytheme)
+  
   decyle_tabela <- tableGrob(decyle,theme=mytheme)
+  
 
   #ustawienia na stronie
   lay <- rbind(c(1,1,2,2,2,2),

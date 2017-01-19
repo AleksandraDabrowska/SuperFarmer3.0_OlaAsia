@@ -4,10 +4,12 @@
 \alias{wizytowka}
 \title{Wizytowka do strategii z Pakietu SuperFarmer.SuperDziewczyn.}
 \usage{
-wizytowka(strategia)
+wizytowka(strategia, liczba_powtorzen = 1000)
 }
 \arguments{
 \item{strategia}{Wybrana strategia, dla ktorej wizytowke chcemy uzyskac.}
+
+\item{liczba_powtorzen}{Liczba wywolan gry celem uzyskania statystyk.}
 }
 \description{
 Funkcja wizytowka generuje wizytowke w formacie pdf opisujaca i wizualizujaca wybrana strategie.

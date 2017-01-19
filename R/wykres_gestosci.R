@@ -31,7 +31,7 @@
 
 wykres_gestosci <- function(dane, strat, med, sr){
   wykres <- ggplot(dane, aes(dane$Liczba_ruchow,colour=dane$Strategia,fill=dane$Strategia))+
-    geom_density(position="stack")+
+    geom_density()+
     scale_color_manual(name="Srednia\n",values=c("#2166ac","#1b7837","#762a83"))+
     scale_fill_manual(values=c("#d1e5f0","#d9f0d3","#e7d4e8"))+
     geom_vline(data=sr, aes(xintercept=sr$grp.mean, color=sr$Strategia), size=1.5)+

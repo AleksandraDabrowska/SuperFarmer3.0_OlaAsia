@@ -29,5 +29,7 @@ tabela_decyli <- function(dane1, dane2, dane3, strat){
   
   rownames(decyle) <- c(strat,"strategia_postMDiPR","strategia_anty_yolo")
   
+  colnames(decyle) <- c("1. decyl","2. decyl","3. decyl","4. decyl","5. decyl","6. decyl","7. decyl","8. decyl","9. decyl")
+  
   return(decyle)
 }

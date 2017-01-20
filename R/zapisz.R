@@ -11,6 +11,7 @@
 #' @export
 
 zapisz <- function(co, plik){
+
   pdf(paste0(plik,".pdf"), width = 29.7, height = 21)
   co
   dev.off()

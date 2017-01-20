@@ -27,6 +27,7 @@
 
 
 wizytowka <- function(strategia,liczba_powtorzen = 1000){
+  setwd(paste0(getwd(), "/inst"))
   #dane do wizytowki
   przebieg_gry <- SuperFarmer.SuperDziewczyn::gra(strategia)
   macierz_przebiegu_gry <- przebieg_gry[[1]]

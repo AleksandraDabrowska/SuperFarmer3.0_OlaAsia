@@ -3,7 +3,7 @@
 #'Funkcja wizytowka generuje wizytowke w formacie pdf opisujaca i wizualizujaca wybrana strategie.
 #'
 #'@param strategia Wybrana strategia, dla ktorej wizytowke chcemy uzyskac.
-#'@param liczba_powtorzen Liczba wywolan gry celem uzyskania statystyk.
+#'@param liczba_powtorzen Liczba wywolan gry celem uzyskania statystyk gier.
 #'
 #'
 #'@importFrom plyr ddply

@@ -1,5 +1,10 @@
 test_that("Wykres_gestosci przyjmuje argument w postaci ramki danych",{
           dana <- c(1,2,3,4,5,6,7)
+          dana2 <- cbind(dana, sample("Pancernik",7, replace=TRUE))
+          dana2 <- as.data.frame(dana2)
           mediana <- median(dana)
+          mediana <- as.data.frame(mediana)
           srednia <- mean(dana)
-          expect_error(wykres_gestosci(dana,"Lala",mediana, srednia))})
+          srednia <- as.data.frame(srednia)
+          expect_error(wykres_gestosci(dana,"Lala",mediana, srednia))
+          expect_length(wykres_gestosci(dana2,"Pancernik",mediana, srednia),9)})

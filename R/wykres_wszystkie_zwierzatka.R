@@ -24,7 +24,7 @@
 #'@export
 
 wykres_wszystkie_zwierzatka <- function(tabela,tytul){
-  slupki <- ggplot(tabela, aes(Numer_kolejki,Liczba, fill=Zwierze))+
+  slupki <- ggplot(tabela, aes(tabela$Numer_kolejki,tabela$Liczba, fill=tabela$Zwierze))+
     scale_fill_manual(values=c("brown","black","green","purple","yellow","#FFCCCC","#FF33CC"))+
     geom_bar(stat="identity")+
     ylab("Liczba zwierzatek")+

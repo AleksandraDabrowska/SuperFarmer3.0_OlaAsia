@@ -1,1 +1,2 @@
-test_that("Wizytowka przyjmuje argument strategii",{expect_error(wizytowka())})
+test_that("Wizytowka przyjmuje argument strategii",{
+  expect_error(wizytowka())})

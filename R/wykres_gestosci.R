@@ -28,7 +28,7 @@
 #' 
 #' @examples 
 #'\dontrun{
-#'gestosc <- wykres_gestosci(superdziewczyn_moc_rcnk,SuperFarmer.SuperDziewczyn::strategia_owce,mediany,srednie)
+#'gestosc <- wykres_gestosci(tabela_wykres,SuperFarmer.SuperDziewczyn::strategia_owce,mediany,srednie)
 #'}
 #' 
 #' @export

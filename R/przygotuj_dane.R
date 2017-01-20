@@ -6,6 +6,7 @@
 #' @param nazwa Nazwa dla parametru, ktore opisuje wektor wejsciowy.
 #' @param n Liczba wywolan gry.
 #'
+#'@examples
 #'\dontrun{
 #'dane_moc <- przygotuj_dane(moc,"Strategia_moc",100)
 #'}

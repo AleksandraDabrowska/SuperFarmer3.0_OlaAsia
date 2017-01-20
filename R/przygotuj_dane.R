@@ -1,10 +1,14 @@
 #' Przygotowanie danych z n wywolan gry.
 #'
-#' Funkcja przygotuj_dane przygotowuje ramke daych z zadanego wektora z danymi.
+#' Funkcja przygotuj_dane() przygotowuje ramke daych z zadanego wektora z danymi.
 #'
 #' @param do_przygotowania Wektor, ktory chcemy przygotowac.
 #' @param nazwa Nazwa dla parametru, ktore opisuje wektor wejsciowy.
-#' @param n Ilosc wywolan gry.
+#' @param n Liczba wywolan gry.
+#'
+#'\dontrun{
+#'dane_moc <- przygotuj_dane(moc,"Strategia_moc",100)
+#'}
 #'
 #' @export
 

@@ -11,9 +11,13 @@ przygotuj_dane(do_przygotowania, nazwa, n)
 
 \item{nazwa}{Nazwa dla parametru, ktore opisuje wektor wejsciowy.}
 
-\item{n}{Ilosc wywolan gry.}
+\item{n}{Liczba wywolan gry.
+
+\dontrun{
+dane_moc <- przygotuj_dane(moc,"Strategia_moc",100)
+}}
 }
 \description{
-Funkcja przygotuj_dane przygotowuje ramke daych z zadanego wektora z danymi.
+Funkcja przygotuj_dane() przygotowuje ramke daych z zadanego wektora z danymi.
 }
 

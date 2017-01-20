@@ -24,6 +24,7 @@
 #'\dontrun{
 #'wizytowka_strategia_owce <- wizytowka(SuperFarmer.SuperDziewczyn::strategia_owce)
 #'}
+#'
 #'@export
 
 

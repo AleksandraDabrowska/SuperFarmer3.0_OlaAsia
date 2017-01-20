@@ -11,7 +11,7 @@ wykres_gestosci(dane, strat, med, sr)
 
 \item{strat}{Nazwa strategii, ktora na wykresie porownujemy.}
 
-\item{med}{Ramka danych z med liczby ruchow dla trzech strategii.}
+\item{med}{Ramka danych z mediana liczby ruchow dla trzech strategii.}
 
 \item{sr}{Ramka danych ze srednia liczby ruchow dla trzech strategii.}
 }
@@ -19,7 +19,13 @@ wykres_gestosci(dane, strat, med, sr)
 Zwraca wykres gestosci.
 }
 \description{
-Funkcja wykres_gestosci sluzy do tworzenia wykresu gestosci liczby ruchow dla trzech strategii, a takze nalozenia na niego
+Funkcja wykres_gestosci() sluzy do tworzenia wykresu gestosci liczby ruchow dla trzech strategii, a takze nalozenia na niego
 pionowych linii z med i srednia dla liczby ruchow dla kazdej strategii.
+}
+\examples{
+\dontrun{
+gestosc <- wykres_gestosci(superdziewczyn_moc_rcnk,SuperFarmer.SuperDziewczyn::strategia_owce,mediany,srednie)
+}
+
 }
 

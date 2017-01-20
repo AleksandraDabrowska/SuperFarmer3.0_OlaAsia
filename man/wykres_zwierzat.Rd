@@ -12,7 +12,15 @@ wykres_zwierzat(dane, tytul)
 \item{tytul}{Argument o klasie string definiujacy tytul wykresu.}
 }
 \description{
-Funkcja wykres_zwierzat sluzy do stworzenia wykresu punktowego, w ktorym punkty odpowiadaja liczbie zwierzat w pojedynczej
-rozgrywce w SuperFarmera.
+Funkcja wykres_zwierzat() sluzy do stworzenia wykresu punktowego, w ktorym punkty odpowiadaja liczbie zwierzat w pojedynczej rozgrywce w SuperFarmera.
+}
+\examples{
+\dontrun{
+wykres_male_zwierzeta <- wykres_wszytskie_zwierzatka(tabela_gra_owce,tytul_tabeli)
+}
+
+}
+\seealso{
+wykres_wszytskie_zwierzatka
 }
 

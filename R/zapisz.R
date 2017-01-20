@@ -1,6 +1,6 @@
 #' Zapisanie obiektu do PDF.
 #'
-#' Funkcja zapisz zapisuje zadany obiekt do pliku PDF w folderze inst.
+#' Funkcja zapisz() zapisuje zadany obiekt do pliku PDF w folderze inst.
 #'
 #' @param co Definiowanie obiektu, ktory chce sie zapisac.
 #' @param plik Nazwa pliku docelowego bez rozszerzenia.

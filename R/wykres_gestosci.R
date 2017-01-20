@@ -1,11 +1,11 @@
 #' Generowanie wykresu gestosci dla trzech strategii
 #' 
-#' Funkcja wykres_gestosci sluzy do tworzenia wykresu gestosci liczby ruchow dla trzech strategii, a takze nalozenia na niego
+#' Funkcja wykres_gestosci() sluzy do tworzenia wykresu gestosci liczby ruchow dla trzech strategii, a takze nalozenia na niego
 #' pionowych linii z med i srednia dla liczby ruchow dla kazdej strategii.
 #' 
 #' @param dane Jest ramka danych zawierjaca trzy grupy dnaych do rysowania gestosci zawierajace nazwy strategii w kolumnie Strategia oraz liczby ruchow w pojedynczej grze w kolumnie Liczba_ruchow.
 #' @param strat Nazwa strategii, ktora na wykresie porownujemy.
-#' @param med Ramka danych z med liczby ruchow dla trzech strategii.
+#' @param med Ramka danych z mediana liczby ruchow dla trzech strategii.
 #' @param sr Ramka danych ze srednia liczby ruchow dla trzech strategii.
 #' 
 #' @return Zwraca wykres gestosci.
@@ -25,6 +25,11 @@
 #' @importFrom ggplot2 element_rect
 #' @importFrom ggplot2 labs
 #' @importFrom ggplot2 geom_text
+#' 
+#' @examples 
+#'\dontrun{
+#'gestosc <- wykres_gestosci(superdziewczyn_moc_rcnk,SuperFarmer.SuperDziewczyn::strategia_owce,mediany,srednie)
+#'}
 #' 
 #' @export
 

@@ -1,7 +1,6 @@
 #' Generowanie wykresu dla liczebnosci zwierzat podczas rozgrywki.
 #' 
-#' Funkcja wykres_zwierzat sluzy do stworzenia wykresu punktowego, w ktorym punkty odpowiadaja liczbie zwierzat w pojedynczej
-#' rozgrywce w SuperFarmera.
+#' Funkcja wykres_zwierzat() sluzy do stworzenia wykresu punktowego, w ktorym punkty odpowiadaja liczbie zwierzat w pojedynczej rozgrywce w SuperFarmera.
 #' 
 #' @param dane Ramka danych zwierajaca liczebnosc zwiezat w rozgrywce. Musi zawierac kolumny Numer_kolejki, liczba, zwierze.
 #' @param tytul Argument o klasie string definiujacy tytul wykresu.
@@ -14,6 +13,12 @@
 #' @importFrom ggplot2 theme
 #' @importFrom ggplot2 ggtitle
 #' 
+#'@examples
+#'\dontrun{
+#'wykres_male_zwierzeta <- wykres_wszytskie_zwierzatka(tabela_gra_owce,tytul_tabeli)
+#'}
+#' 
+#' @seealso wykres_wszytskie_zwierzatka
 #' @export
 
 

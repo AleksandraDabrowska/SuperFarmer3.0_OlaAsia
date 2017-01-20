@@ -1,7 +1,9 @@
 #'Wykres obrazujacy przebieg pojedynczej gry
 #'
-#'@param tabela tabela danych do wykresu
-#'@param tytul tytul wykresu
+#'Funkcja wykres_wszytskie_zwierzatka(), rysuje wykres slupkowy zawierajacy liczby poszczegolnych zwierzat dla danej kolejki, dla jednej, losowej gry.
+#'
+#'@param tabela Ramka danych zwierajaca liczebnosc zwiezat w rozgrywce. Musi zawierac kolumny Numer_kolejki, liczba, zwierze.
+#'@param tytul Argument o klasie string definiujacy tytul wykresu.
 #'
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 geom_bar
@@ -14,7 +16,11 @@
 #' 
 #'@return slupki wykres slupkowy
 #'
-#'
+#'@examples
+#'\dontrun{
+#'wykres <- wykres_wszytskie_zwierzatka(tabela_gra_owce,tytul_tabeli)
+#'}
+#'@seealso wykres_zwierzat
 #'@export
 
 wykres_wszystkie_zwierzatka <- function(tabela,tytul){

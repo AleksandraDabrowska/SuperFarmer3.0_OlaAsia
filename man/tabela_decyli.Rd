@@ -15,7 +15,19 @@ tabela_decyli(dane1, dane2, dane3, strat)
 
 \item{strat}{Nazwa strategii pierwszej.}
 }
+\value{
+decyle tabela z deyclami
+}
 \description{
-Funkcja tabela_decyli oblicza decyle liczby ruchow dla trzech strategii i zwraca je w tabeli.
+Funkcja tabela_decyli() oblicza decyle liczby ruchow dla trzech strategii i zwraca je w tabeli.
+}
+\examples{
+\dontrun{
+tabela_dec <- tabela_deycli(superdziewczyn,moc,rcnk,SuperFarmer.SuperDziewczyn::strategia_owce)
+}
+
+}
+\seealso{
+tabela_statystyk
 }
 

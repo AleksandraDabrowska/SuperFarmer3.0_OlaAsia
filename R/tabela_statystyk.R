@@ -1,6 +1,6 @@
 #' Generowanie tabeli z podstawowymi statystykami dla trzech strategii
 #' 
-#' Funkcja liczy podstawowe statystyki dla trzech strategii i przedstawia je w tabeli.
+#' Funkcja tabela_statystyk() liczy podstawowe statystyki dla trzech strategii i przedstawia je w tabeli.
 #' 
 #' @param dane1 Ramka danych z liczba ruchow dla gier z pierwsza strategia.
 #' @param dane2 Ramka danych z liczba ruchow dla gier z druga strategia.
@@ -9,6 +9,13 @@
 #' 
 #' @importFrom stats sd
 #' @importFrom stats median
+#' 
+#' @examples 
+#'\dontrun{
+#'tabela_stat <- tabela_statystyk(superdziewczyn,moc,rcnk,SuperFarmer.SuperDziewczyn::strategia_owce)
+#'}
+#' 
+#' @seealso tabela_decyli
 #' 
 #' @export
 

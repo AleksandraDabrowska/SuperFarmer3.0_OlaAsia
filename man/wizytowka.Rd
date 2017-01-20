@@ -18,5 +18,6 @@ Funkcja wizytowka generuje wizytowke w formacie pdf opisujaca i wizualizujaca wy
 \dontrun{
 wizytowka_strategia_owce <- wizytowka(SuperFarmer.SuperDziewczyn::strategia_owce)
 }
+
 }
 

@@ -12,6 +12,6 @@ zapisz(co, plik)
 \item{plik}{Nazwa pliku docelowego bez rozszerzenia.}
 }
 \description{
-Funkcja zapisz zapisuje zadany obiekt do pliku PDF w folderze inst.
+Funkcja zapisz() zapisuje zadany obiekt do pliku PDF w folderze inst.
 }
 

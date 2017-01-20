@@ -16,6 +16,15 @@ tabela_statystyk(dane1, dane2, dane3, strat)
 \item{strat}{Nazwa strategii pierwszej.}
 }
 \description{
-Funkcja liczy podstawowe statystyki dla trzech strategii i przedstawia je w tabeli.
+Funkcja tabela_statystyk() liczy podstawowe statystyki dla trzech strategii i przedstawia je w tabeli.
+}
+\examples{
+\dontrun{
+tabela_stat <- tabela_statystyk(superdziewczyn,moc,rcnk,SuperFarmer.SuperDziewczyn::strategia_owce)
+}
+
+}
+\seealso{
+tabela_decyli
 }
 

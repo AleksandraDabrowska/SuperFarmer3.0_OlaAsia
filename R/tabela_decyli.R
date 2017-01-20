@@ -1,6 +1,6 @@
 #' Zwraca tabele z decylami dla strategii.
 #' 
-#' Funkcja tabela_decyli oblicza decyle liczby ruchow dla trzech strategii i zwraca je w tabeli.
+#' Funkcja tabela_decyli() oblicza decyle liczby ruchow dla trzech strategii i zwraca je w tabeli.
 #' 
 #' @param dane1 Ramka danych z liczba ruchow dla gier z pierwsza strategia.
 #' @param dane2 Ramka danych z liczba ruchow dla gier z druga strategia.
@@ -9,6 +9,14 @@
 #'
 #' @importFrom stats quantile
 #' 
+#' @return decyle tabela z deyclami
+#' 
+#' @examples 
+#'\dontrun{
+#'tabela_dec <- tabela_deycli(superdziewczyn,moc,rcnk,SuperFarmer.SuperDziewczyn::strategia_owce)
+#'}
+#' 
+#' @seealso tabela_statystyk
 #' @export
 
 tabela_decyli <- function(dane1, dane2, dane3, strat){

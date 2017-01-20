@@ -55,13 +55,36 @@ wizytowka <- function(strategia,liczba_powtorzen = 1000){
   przebieg_gier_rcnk <- przygotuj_dane(przebieg_gier_rcnk, rcnk, liczba_powtorzen)
   przebieg <- rbind(przebieg_gier_superdziewczyn,przebieg_gier_moc)
   przebieg <- rbind(przebieg,przebieg_gier_rcnk)
-
-  srednia <-ddply(przebieg, "Strategia", summarise, grp.mean=mean(Liczba_ruchow))
-  mediana_wykres <- ddply(przebieg,"Strategia",summarise,grp.median=median(Liczba_ruchow))
+  
+  
+  Strategia <- c(gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))),"strategia_postMDiPR","strategia_anty_yolo")
+  
+  srednia_superfarmer <- mean(przebieg_gier_superdziewczyn$Liczba_ruchow)
+  srednia_moc <- mean(przebieg_gier_moc$Liczba_ruchow)
+  srednia_rcnk <- mean(przebieg_gier_rcnk$Liczba_ruchow)
+  
+  srednia <- rbind(srednia_superfarmer,srednia_moc)
+  srednia <- rbind(srednia,srednia_rcnk)
+  srednia <- as.data.frame(srednia)
+  srednia <- cbind(srednia,Strategia)
+  colnames(srednia)[1] <- "grp.mean"
+  
+  
+  mediana_superfarmer <- median(przebieg_gier_superdziewczyn$Liczba_ruchow)
+  mediana_moc <- median(przebieg_gier_moc$Liczba_ruchow)
+  mediana_rcnk <- median(przebieg_gier_rcnk$Liczba_ruchow)
+  
+  mediana <- rbind(mediana_superfarmer,mediana_moc)
+  mediana <- rbind(mediana,mediana_rcnk)
+  mediana <- as.data.frame(mediana)
+  mediana <- cbind(mediana,Strategia)
+  colnames(mediana)[1] <- "grp.median"
+  
+  
 
   #wykres gestosci dla najlepszej strategii z pakietu moc, najgorszej z rcnk i naszej
   nazwa <- gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia))))
-  wykres_gestosc <- SuperFarmer.SuperDziewczyn::wykres_gestosci(przebieg,nazwa,mediana_wykres,srednia)
+  wykres_gestosc <- SuperFarmer.SuperDziewczyn::wykres_gestosci(przebieg,nazwa,mediana,srednia)
 
   #dane do wykresu owiec i krolikow
   kroliki <- przebieg_gry[,c(1,8)]

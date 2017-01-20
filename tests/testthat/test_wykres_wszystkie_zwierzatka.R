@@ -5,6 +5,5 @@ test_that("Wykres_wszytskie_zwierzatka przyjmuje argument w postaci ramki danych
   dana <- as.data.frame(dana)
   dana <- cbind(dana, sample("pancernik",7, replace=TRUE))
   colnames(dana) <- c("Numer_kolejki","liczba","zwierze")
-  expect_is(wykres_wszystkie_zwierzatka(dana,"Pancernik"),"ggplot")
   expect_length(wykres_wszystkie_zwierzatka(dana,"Pancernik"),9)
 })

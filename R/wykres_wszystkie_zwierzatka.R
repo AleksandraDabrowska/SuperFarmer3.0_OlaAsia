@@ -13,6 +13,7 @@
 #' @importFrom ggplot2 theme
 #' @importFrom ggplot2 ggtitle
 #' @importFrom ggplot2 geom_bar
+#' @importFrom ggplot2 scale_fill_brewer
 #' 
 #'@return slupki wykres slupkowy
 #'
@@ -25,7 +26,7 @@
 
 wykres_wszystkie_zwierzatka <- function(tabela,tytul){
   slupki <- ggplot(tabela, aes(tabela$Numer_kolejki,tabela$Liczba, fill=tabela$Zwierze))+
-    scale_fill_manual(values=c("brown","black","green","purple","yellow","#FFCCCC","#FF33CC"))+
+    scale_fill_brewer(name="Zwierze",palette="Set1")+
     geom_bar(stat="identity")+
     ylab("Liczba zwierzatek")+
     ylim(c(0,30))+

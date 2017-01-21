@@ -1,6 +1,6 @@
 #'Wizytowka do strategii z Pakietu SuperFarmer.SuperDziewczyn.
 #'
-#'Funkcja wizytowka generuje wizytowke w formacie pdf opisujaca i wizualizujaca wybrana strategie.
+#'Funkcja wizytowka() generuje wizytowke w formacie pdf opisujaca wybrana strategie z pakietu SuperFarmer.SuperDziewczyn. Oprocz wizualizacji w postaci wykresu gestosci dla 3 strategii oraz wykresu przebiegu jednej gry prezentujemy tabele statystyk i deycli dla trzech wybranych strategii.
 #'
 #'@param strategia Wybrana strategia, dla ktorej wizytowke chcemy uzyskac.
 #'@param liczba_powtorzen Liczba wywolan gry celem uzyskania statystyk gier.

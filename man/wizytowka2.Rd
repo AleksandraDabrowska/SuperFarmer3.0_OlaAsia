@@ -9,10 +9,10 @@ wizytowka2(strategia, liczba_powtorzen = 1000)
 \arguments{
 \item{strategia}{Wybrana strategia, dla ktorej wizytowke chcemy uzyskac.}
 
-\item{liczba_powtorzen}{Liczba wywolan gry celem uzyskania statystyk.}
+\item{liczba_powtorzen}{Liczba wywolan gry celem uzyskania statystyk gier.}
 }
 \description{
-Funkcja wizytowka generuje wizytowke w formacie pdf opisujaca i wizualizujaca wybrana strategie.
+Funkcja wizytowka() generuje wizytowke w formacie pdf opisujaca wybrana strategie z pakietu SuperFarmer.SuperDziewczyn. Oprocz wizualizacji w postaci wykresu gestosci dla 3 strategii oraz wykresu przebiegu jednej gry prezentujemy tabele statystyk i deycli dla trzech wybranych strategii.
 }
 \examples{
 \dontrun{

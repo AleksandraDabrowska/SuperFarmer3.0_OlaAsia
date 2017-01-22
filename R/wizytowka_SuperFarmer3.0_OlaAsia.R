@@ -88,7 +88,7 @@ wizytowka_SuperFarmer3.0_OlaAsia <- function(strategia,liczba_powtorzen = 1000){
   przebieg_gry_waski <- gather(przebieg_gry,"Numer_kolejki","Liczba",-8)
   colnames(przebieg_gry_waski)[2] <- "Zwierze"
  #wykres slupkowy dla liczebnosci poszczegolnych zwierzat w stadzie glownym
-  tytul_zwierzeta <- "Zmiany liczby zwierzat w pojedynczej grze"
+  tytul_zwierzeta <- "Pojedyncza gra: zmiana liczby poszczegolnych zwierzat"
   slupki <- SuperFarmer.SuperDziewczyn::wykres_wszystkie_zwierzatka(przebieg_gry_waski,tytul_zwierzeta)
 
   #tytul
@@ -98,7 +98,7 @@ wizytowka_SuperFarmer3.0_OlaAsia <- function(strategia,liczba_powtorzen = 1000){
   autorzy <- textGrob("Aleksandra Dabrowska,\n Joanna Zbijewska",gp=gpar(fontsize=40, col="black"))
   
   #to co chcemy dolozyc jako tekst
-  tekst <- textGrob(paste0("Przedstawiamy ",gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia))))," z pakietu \n SuperFarmer.SuperDziewczyn. Porownalysmy ja ze strategia\n strategia_postMDiPR  z pakietu SuperFarmerMoc,\n dajaca najlepsze wyniki oraz strategia\n strategia_anty_yolo z pakietu SuperFarmerRCNK, \nktora dawala najdluzsze gry.\n Porownanie przedstawilysmy na wykresie gestosci,\n na ktorym zaznaczone sa srednia i mediana\n dla kazdej strategii, a takze\n w tabeli z podstawowymi statystykami.\n Jednoczesnie dla przedstawionej strategii\n przedstawiamy zmiany liczby niektorych\n zwierzat w stadzie podczas pojedynczej gry."),gp=gpar(fontsize=26, col="black"))
+  tekst <- textGrob(paste0("Przedstawiamy ",gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia))))," z pakietu \n SuperFarmer.SuperDziewczyn. Porownalysmy ja ze strategia\n strategia_postMDiPR  z pakietu SuperFarmerMoc,\n dajaca najlepsze wyniki oraz strategia\n strategia_anty_yolo z pakietu SuperFarmerRCNK, \nktora dawala najdluzsze gry.\n Porownanie przedstawilysmy na wykresie gestosci,\n na ktorym zaznaczone sa srednia i mediana\n dla kazdej strategii, a takze\n w tabeli z podstawowymi statystykami.\n Jednoczesnie dla przedstawionej strategii\n przedstawiamy zmiany liczby zwierzat\n w stadzie podczas jednej losowej gry."),gp=gpar(fontsize=26, col="black"))
   
   #statystyki na wczesniej przygotowanych danych
   nazwa_strat <- paste0("SuperFarmer3.0_OlaAsia_wizytowka_",gsub("SuperFarmer.SuperDziewczyn::","",paste0(deparse(substitute(strategia)))))
@@ -113,7 +113,7 @@ wizytowka_SuperFarmer3.0_OlaAsia <- function(strategia,liczba_powtorzen = 1000){
   mytheme <- gridExtra::ttheme_default(
     core = list(fg_params=list(cex = 1.8),bg_params = list(fill = c("#d1e5f0","#d9f0d3","#e7d4e8"))),
     colhead = list(fg_params=list(cex = 1.8)),
-    rowhead = list(fg_params=list(cex = 1.9, fontface = "bold")))
+    rowhead = list(fg_params=list(cex = 1.8, fontface = "bold")))
   
   statystyki_tabela <- tableGrob(statystyki, theme = mytheme)
   

@@ -26,7 +26,7 @@
 
 wykres_wszystkie_zwierzatka <- function(tabela,tytul){
   slupki <- ggplot(tabela, aes(tabela$Numer_kolejki,tabela$Liczba, fill=tabela$Zwierze))+
-    scale_fill_brewer(name="Zwierze",palette="Set1")+
+    scale_fill_manual(name="Zwierze",values=c("#4d4d4d","#8c510a","#7fbc41","#7570b3","#4393c3","#fee090","#de77ae"))+
     geom_bar(stat="identity")+
     ylab("Liczba zwierzatek")+
     ylim(c(0,30))+
@@ -42,6 +42,4 @@ wykres_wszystkie_zwierzatka <- function(tabela,tytul){
           legend.title = element_text(size=25))+
     labs(color="Zwierze\n")
   return(slupki)
-  
-  
 }

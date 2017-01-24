@@ -6,12 +6,12 @@
 #' @param plik Nazwa pliku docelowego bez rozszerzenia.
 #'
 #' @importFrom grDevices dev.off
-#' @importFrom grDevices pdf
+#' @importFrom Cairo CairoPDF
 #'
 #' @export
 
 zapisz <- function(co, plik){
-  pdf(paste0(plik,".pdf"), width = 29.7, height = 21)
+  CairoPDF(paste0(plik,".pdf"), width = 29.7, height = 21)
   co
   dev.off()
 }

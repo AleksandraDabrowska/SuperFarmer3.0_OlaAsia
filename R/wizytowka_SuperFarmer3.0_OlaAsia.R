@@ -31,9 +31,9 @@
 
 wizytowka_SuperFarmer3.0_OlaAsia <- function(strategia,liczba_powtorzen = 1000){
   #zapisujemy sciezke w ktorej jestesmy
-  path <- paste0(getwd())
+  #path <- paste0(getwd())
   #mamy folder ktory bedzie przechowywal wizytowki, wchodzimy do niego
-  setwd(paste0(getwd(), "/inst"))
+  #setwd(paste0(getwd(), "/inst"))
   #dane do wizytowki
   przebieg_gry <- SuperFarmer.SuperDziewczyn::gra(strategia)
   macierz_przebiegu_gry <- przebieg_gry[[1]]
@@ -134,5 +134,5 @@ wizytowka_SuperFarmer3.0_OlaAsia <- function(strategia,liczba_powtorzen = 1000){
   zapisz(grid.arrange(G),nazwa_strat)
 
   #wracamy do pierwotnej sciezki
-  setwd(path)
+  #setwd(path)
 }
